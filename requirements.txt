@@ -1,0 +1,10 @@
+joblib
+numpy
+pandas
+six
+swifter
+xlrd
+XlsxWriter
+openpyxl
+pydantic
+pytest
