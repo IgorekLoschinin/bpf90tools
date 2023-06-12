@@ -56,7 +56,7 @@ class PSolution(object):
 
 			self.__solution_dataframe = pd.DataFrame(
 				list_sol, columns=col_name
-			)
+			).astype({'effect': 'inf8'})
 
 		self.__solution_dataframe = self.__solution_dataframe.loc[
 			self.__solution_dataframe.effect == self.__solution_dataframe.effect.max()
