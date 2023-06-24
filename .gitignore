@@ -15,7 +15,7 @@
 *.docx
 
 !requirements.txt
-!parsers/*/tests/**
+!*/tests/*/**
 
 *.idea*
 *__pycache__*
