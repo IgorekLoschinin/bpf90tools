@@ -1,4 +1,4 @@
-##!/usr/bin/venv python
+#!/usr/bin/venv python
 # coding: utf-8
 from pathlib import Path
 

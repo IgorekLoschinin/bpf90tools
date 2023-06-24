@@ -1,11 +1,10 @@
-##!/usr/bin/venv python
+#!/usr/bin/venv python
 # coding: utf-8
 
 from typing import Dict
 
 
 class Keyword(object):
-
 	RENUMF90_keyword = {
 		"DATAFILE",
 		"TRAITS",
@@ -54,7 +53,8 @@ class Keyword(object):
 		"OPTION init_eq",
 		"OPTION solv_method",
 		"OPTION tol",
-		"OPTION residual",  # вероятно ошибка. residual - это значение, а не настройка
+		"OPTION residual",
+		# вероятно ошибка. residual - это значение, а не настройка
 		"OPTION avgeps",
 		"OPTION cont",
 		"OPTION missing",
@@ -180,13 +180,14 @@ class Keyword(object):
 	}
 
 	all_join_keyword = \
-		RENUMF90_keyword |\
-		BLUPF90_keyword |\
-		BLUP90IOD2_keyword |\
-		REMLF90_keyword |\
-		AIREMLF90_keyword |\
-		PREGSF90_keyword |\
-		POSTGSF90_keyword
+		RENUMF90_keyword | \
+		BLUPF90_keyword | \
+		REMLF90_keyword | \
+		AIREMLF90_keyword
+
+	# BLUP90IOD2_keyword |\
+	# PREGSF90_keyword |\
+	# POSTGSF90_keyword
 
 	@staticmethod
 	def is_single_line_properties(prop: str) -> bool:

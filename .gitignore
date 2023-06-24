@@ -15,9 +15,10 @@
 *.docx
 
 !requirements.txt
+!parsers/*/tests/**
 
 *.idea*
 *__pycache__*
-*TestFiles*
+*.pytest_cache*
 *.ipynb_checkpoints*
 *.dbf

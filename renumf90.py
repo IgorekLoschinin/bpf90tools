@@ -1,9 +1,9 @@
-##!/usr/bin/venv python
+#!/usr/bin/venv python
 # coding: utf-8
 
 import os
 
-from utils.utils import run_exe
+# from utils._utils import run_exe
 
 
 class Renumf90(object):
@@ -20,7 +20,7 @@ class Renumf90(object):
 		self.path_to_file_exe = path_to_exe
 		self.filename_config = filename_cfg
 
-	def run(self):
+	def start(self) -> None:
 		try:
 
 			if not self.check_file_cfg():
