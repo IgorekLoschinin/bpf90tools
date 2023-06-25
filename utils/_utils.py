@@ -95,7 +95,7 @@ def to_json(
             json.dump(obj, file, indent=4)
 
     except Exception as e:
-        return False
+        raise e
 
     return True
 
@@ -113,4 +113,4 @@ def from_json(to_file: str | Path) -> list | dict | None:
                 return json.load(file)
 
     except Exception as e:
-        print(e)
+        raise e

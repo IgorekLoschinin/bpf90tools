@@ -21,8 +21,8 @@ class PReml(CheckMixin):
 		self.__variance = Variance()
 		self.__lst_strings = []
 
-	def variance(self) -> Variance:
-		""" The method return a dict with variances. """
+	@property
+	def values(self) -> Variance | None:
 		return self.__variance
 
 	def parse_file(self, pth_file: str | Path) -> None:
@@ -35,7 +35,7 @@ class PReml(CheckMixin):
 			raise OSError("File remlf.log not found!")
 
 		try:
-			self._load(pth_file)
+			self._read(pth_file)
 
 			for line in self.__lst_strings:
 				if 'Genetic variance(s)' in line:
@@ -63,7 +63,7 @@ class PReml(CheckMixin):
 		except Exception as exp:
 			raise exp
 
-	def _load(self, file: Path) -> None:
+	def _read(self, file: Path) -> None:
 		"""
 
 		:param file:

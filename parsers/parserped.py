@@ -2,6 +2,7 @@
 # coding: utf-8
 from pathlib import Path
 from ..utils import CheckMixin
+
 import pandas as pd
 
 
@@ -15,8 +16,7 @@ class PPed(CheckMixin):
 		self.__lst_ped = []
 
 	@property
-	def data_ped(self) -> pd.DataFrame | None:
-		""" The method return a data frame with the pedigree. """
+	def values(self) -> pd.DataFrame | None:
 		return self.__data_ped
 
 	def parse_file(self, pth_file: str | Path) -> None:
@@ -35,17 +35,18 @@ class PPed(CheckMixin):
 			)
 
 		try:
-			self._load(pth_file)
+			self._read(pth_file)
 
-			self.__data_ped = \
-				pd.DataFrame(self.__lst_ped, columns=['NOMER', 'ID'])
+			self.__data_ped = pd.DataFrame(
+				self.__lst_ped, columns=["nomer", "id"]
+			)
 
 		except FileNotFoundError as e1:
 			raise e1
 		except Exception as e:
 			raise e
 
-	def _load(self, file: Path) -> None:
+	def _read(self, file: Path) -> None:
 		"""
 
 		:param file:
@@ -54,5 +55,5 @@ class PPed(CheckMixin):
 		with file.open(mode="r", encoding="utf-8") as file:
 			self.__lst_ped = [
 				[item.strip().split()[0], item.strip().split()[-1]]
-				for item in file.readlines()
+				for item in file
 			]

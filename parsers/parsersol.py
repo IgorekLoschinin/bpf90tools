@@ -13,14 +13,13 @@ class PSolution(CheckMixin):
 	def __init__(self, varg: float = None) -> None:
 		"""
 		:param varg: - The genetic ability required to calculate the
-			confidence of the estimate.
+			confidence of the estimate
 		"""
 		self.__varg = varg
 		self.__data_sol = None
 
 	@property
-	def data_sol(self) -> pd.DataFrame | None:
-		""" The method return a data frame with the results. """
+	def solutions(self) -> pd.DataFrame | None:
 		return self.__data_sol
 
 	def parse_file(self, file: str | Path) -> None:
@@ -28,7 +27,7 @@ class PSolution(CheckMixin):
 		values
 
 		:param file: - path to file solutions
-		return: dataFrame table data
+		:return: - dataFrame table data
 		"""
 
 		if isinstance(file, str):
@@ -40,65 +39,55 @@ class PSolution(CheckMixin):
 				f" Check the file - {file.stem}"
 			)
 		try:
-			self._load(file)
+			self.read(file)
 
 			self.__data_sol = self.__data_sol.loc[
 				self.__data_sol.effect == self.__data_sol.effect.max()
-				]
-
-			self.__data_sol['effect'] = \
-				self.__data_sol['effect'].astype(int)
-
-			self.__data_sol[['solution', 's.e.']] = \
-				self.__data_sol[['solution', 's.e.']].astype(float)
+			]
 
 			self.__data_sol = \
 				self.__data_sol.rename(columns={"solution": "EBV"})
 
 			if self.__varg is not None:
-				self.__data_sol["REL"] = \
-					self.__data_sol['s.e.'].apply(
-						lambda x: self.rel_from_sep(x, self.__varg)
-					).astype(np.int16)
+				self.__data_sol["REL"] = self.__data_sol['s.e.'].apply(
+					lambda x: self._rel_from_sep(x, self.__varg)
+				).astype(np.int16)
 
-				self.__data_sol = self.__data_sol[
-					["EBV", "REL", "level"]
-				]
+				self.__data_sol = self.__data_sol[["EBV", "REL", "level"]]
 
 			else:
-				self.__data_sol = self.__data_sol[
-					["EBV", "s.e.", "level"]
-				]
+				self.__data_sol = self.__data_sol[["EBV", "s.e.", "level"]]
 
 		except Exception as e:
 			raise e
 
-	def _load(self, file: Path) -> None:
+	def _read(self, pth_file: Path) -> None:
 		"""
 
-		:param file:
+		:param pth_file:
 		:return:
 		"""
 
-		with file.open(mode="r", encoding="utf-8") as file:
-			data_sol = file.readlines()
+		with pth_file.open(mode="r", encoding="utf-8") as file:
 
 			# Parsing the string containing the field names
-			col_name = file[0].replace('/', ' ').strip().split()
-			list_sol = [item.strip().split() for item in data_sol[1:]]
+			col_name = file.readline().replace('/', ' ').strip().split()
+			list_sol = [line.strip().split() for line in file]
 
-			self.__data_sol = pd.DataFrame(
-				list_sol, columns=col_name
-			).astype({'effect': 'inf8'})
+			self.__data_sol = pd.DataFrame(list_sol, columns=col_name)
+
+		self.__data_sol = self.__data_sol.astype(
+			{'effect': 'int8', 'solution': 'float64', 's.e.': 'float64'}
+		)
 
 	@staticmethod
-	def rel_from_sep(se_data: float, var_gen: float) -> float:
+	def _rel_from_sep(se_data: float, var_gen: float) -> float:
 		""" Derivation of the reliability of the estimate from its
 		standard deviation.
 
-		:param se_data: - standard deviation calculated by blupf90.
-		:param var_gen: - genetic variance calculated by remlf90.
-		return: The return reliability.
+		:param se_data: - Standard deviation calculated by blupf90
+		:param var_gen: - Genetic variance calculated by remlf90
+		:return: - The return reliability
 		"""
 		h = (1 - (se_data ** 2) / var_gen) * 100
 
@@ -106,17 +95,3 @@ class PSolution(CheckMixin):
 			return 0
 
 		return np.floor(h)
-
-	def merge_with_ped(self, data_ped: pd.DataFrame, on=None) -> pd.DataFrame:
-		""" Method that will combine two data objects by key
-		fields - solutions and renadd.
-		"""
-
-		merge_sol_and_ped = pd.merge(
-			self.__data_sol,
-			data_ped,
-			left_on="level",
-			right_on="NOMER" if on is None else on
-		).drop(columns=["level", "NOMER"])
-
-		return merge_sol_and_ped

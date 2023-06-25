@@ -20,12 +20,10 @@ class PAIReml(CheckMixin):
 
 	def __init__(self) -> None:
 		self.__variance = Variance()
-
 		self.__lst_strings = []
 
 	@property
-	def value(self) -> Variance | None:
-		""" Get dict variance. """
+	def values(self) -> Variance | None:
 		return self.__variance
 
 	def parse_file(self, pth_file: str | Path) -> None:
@@ -42,7 +40,7 @@ class PAIReml(CheckMixin):
 			raise OSError(f"The path - {pth_file.stem}, passed is not a file!")
 
 		try:
-			self._load(pth_file)
+			self._read(pth_file)
 
 			for line in self.__lst_strings:
 
@@ -71,7 +69,7 @@ class PAIReml(CheckMixin):
 		except Exception as exp:
 			raise exp
 
-	def _load(self, file: Path) -> None:
+	def _read(self, file: Path) -> None:
 		"""
 
 		:param file:
