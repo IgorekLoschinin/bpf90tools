@@ -1,13 +1,15 @@
 #!/usr/bin/venv python
 # coding: utf-8
 from pathlib import Path
+from . import IParser
 from ..utils import CheckMixin
+
 
 import numpy as np
 import pandas as pd
 
 
-class PSolution(CheckMixin):
+class PSolution(IParser, CheckMixin):
 	""" Processing the file with results of the assessment """
 
 	def __init__(self, varg: float = None) -> None:
@@ -39,7 +41,7 @@ class PSolution(CheckMixin):
 				f" Check the file - {file.stem}"
 			)
 		try:
-			self.read(file)
+			self._read(file)
 
 			self.__data_sol = self.__data_sol.loc[
 				self.__data_sol.effect == self.__data_sol.effect.max()

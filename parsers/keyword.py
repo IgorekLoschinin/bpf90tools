@@ -1,8 +1,6 @@
 #!/usr/bin/venv python
 # coding: utf-8
 
-from typing import Dict
-
 
 class Keyword(object):
 	RENUMF90_keyword = {
@@ -188,24 +186,3 @@ class Keyword(object):
 	# BLUP90IOD2_keyword |\
 	# PREGSF90_keyword |\
 	# POSTGSF90_keyword
-
-	@staticmethod
-	def is_single_line_properties(prop: str) -> bool:
-		"""  """
-
-		if prop.startswith("OPTION") or prop.startswith("COMBINE"):
-			return True
-
-		return False
-
-	@staticmethod
-	def split_single_line_property(prop: str) -> Dict:
-		"""  """
-
-		if prop.startswith("OPTION"):
-			comb_prop, value = prop.split(" ", 1)
-
-			return {comb_prop: [value]}
-
-		if prop.startswith("COMBINE"):
-			pass

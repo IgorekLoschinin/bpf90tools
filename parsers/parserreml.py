@@ -2,6 +2,7 @@
 # coding: utf-8
 from pathlib import Path
 from pydantic import BaseModel
+from . import IParser
 from ..utils import CheckMixin
 
 
@@ -13,7 +14,7 @@ class Variance(BaseModel):
 	heritability: float = None
 
 
-class PReml(CheckMixin):
+class PReml(IParser, CheckMixin):
 	""" Processing the file method reml in which the variance information
 	is stored """
 
@@ -31,10 +32,10 @@ class PReml(CheckMixin):
 		if isinstance(pth_file, str):
 			pth_file = Path(pth_file)
 
-		if not self.is_file(pth_file):
-			raise OSError("File remlf.log not found!")
-
 		try:
+			if not self.is_file(pth_file):
+				raise OSError("File remlf.log not found!")
+
 			self._read(pth_file)
 
 			for line in self.__lst_strings:

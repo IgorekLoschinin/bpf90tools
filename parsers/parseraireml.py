@@ -1,6 +1,7 @@
 #!/usr/bin/venv python
 # coding: utf-8
 from pathlib import Path
+from . import IParser
 from ..utils import CheckMixin
 
 from pydantic import BaseModel
@@ -14,7 +15,7 @@ class Variance(BaseModel):
 	heritability: float = None
 
 
-class PAIReml(CheckMixin):
+class PAIReml(IParser, CheckMixin):
 	""" Processing the file method airemlf90 in which the variance information
 	is stored """
 

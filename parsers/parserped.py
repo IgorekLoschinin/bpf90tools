@@ -1,12 +1,13 @@
 #!/usr/bin/venv python
 # coding: utf-8
 from pathlib import Path
+from . import IParser
 from ..utils import CheckMixin
 
 import pandas as pd
 
 
-class PPed(CheckMixin):
+class PPed(IParser, CheckMixin):
 	""" Pedigree file processing - renadd__.ped which is obtained as a result
 	of processing by renumf90 program.
 	Example file: renadd02.ped	"""
