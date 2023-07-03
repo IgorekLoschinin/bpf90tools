@@ -30,8 +30,7 @@ class PAIReml(IParser, CheckMixin):
 	def parse_file(self, pth_file: str | Path) -> None:
 		""" Parsing the log file of the airemlf90.exe(sh) program
 
-		:param pth_file:
-		:return:
+		:param pth_file: - The path to the file log
 		"""
 
 		if isinstance(pth_file, str):
@@ -71,27 +70,29 @@ class PAIReml(IParser, CheckMixin):
 			raise exp
 
 	def _read(self, file: Path) -> None:
-		"""
+		""" Reading a file
 
-		:param file:
-		:return:
+		:param file: - The path to the file
 		"""
 		with file.open(mode='r', encoding="utf-8") as file_log:
 			self.__lst_strings = list(map(
-				lambda x: x.strip(), file_log.readlines()
+				lambda x: x.strip(), file_log
 			))
 
 	def _next_value(self, elem: str) -> int:
-		"""
+		""" Determines the index of the next element in the list
 
-		:param elem:
-		:return:
+		:param elem: - List item
+		:return: - Return the index of the next element
 		"""
 
 		return self.__lst_strings.index(elem) + 1
 
 	def _heritability(self) -> None:
-		"""  """
+		""" Heritability, the degree of conditionality of the phenotypic
+		variability of any trait in an animal population by genotypic
+		differences between individuals """
+
 		try:
 			self.__variance.heritability = round(
 				self.__variance.varG / (

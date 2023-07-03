@@ -2,13 +2,13 @@
 # coding: utf-8
 from pathlib import Path
 from . import IParser
-from .keyword import Keyword
+from .settingsf90 import Settingsf90
 from ..utils import CheckMixin
 
 from collections import defaultdict
 
 
-class PParams(IParser, Keyword, CheckMixin):
+class PParams(IParser, Settingsf90, CheckMixin):
 	""" This is a class that processes a parameter file which is a
 	configuration file for calculating blupf90. """
 
@@ -16,16 +16,16 @@ class PParams(IParser, Keyword, CheckMixin):
 		self.__data_param = defaultdict(list)
 
 	@property
-	def params(self) -> dict:
+	def params(self) -> dict[list]:
 		""" Method that returns data - a dictionary of keywords and their
-		values. """
+		values """
 		return self.__data_param
 
 	def parse_file(self, pth_file: str) -> None:
 		""" Parsing the param.txt file
 
-		:param pth_file:
-		:return:
+		:param pth_file: - The path to the file param.txt
+		:return: - Throws an exception when an error occurs
 		"""
 
 		if isinstance(pth_file, str):
@@ -43,9 +43,9 @@ class PParams(IParser, Keyword, CheckMixin):
 					continue
 
 				if line.startswith("OPTION") or line.startswith("COMBINE"):
-					self.__data_param[key_word_par].append(
-						self.split_single_line_property(line.strip())
-					)
+					opt, value = line.strip().split(" ", 1)
+
+					self.__data_param[opt].append(value)
 
 				else:
 					if line.strip() in self.__class__.all_join_keyword:
@@ -60,24 +60,11 @@ class PParams(IParser, Keyword, CheckMixin):
 			raise exp
 
 	def _read(self, pth_file: str | Path) -> None | list:
-		""" Method that processes a text file with parameters to form a
-		dictionary
+		""" Reading a file
 
-		:param pth_file:
-		:return:
+		:param pth_file: - The path to the file
+		:return: - Return the list line
 		"""
 
 		with pth_file.open(mode='r', encoding='utf-8') as file:
 			return file.readlines()
-
-	@staticmethod
-	def split_single_line_property(prop: str) -> dict:
-		"""  """
-
-		if prop.startswith("OPTION"):
-			comb_prop, value = prop.split(" ", 1)
-
-			return {comb_prop: [value]}
-
-		if prop.startswith("COMBINE"):
-			pass

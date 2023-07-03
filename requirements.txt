@@ -7,4 +7,5 @@ xlrd
 XlsxWriter
 openpyxl
 pydantic
+deepdiff
 pytest

@@ -6,7 +6,6 @@ from .blupf90 import Blupf90
 from .airemlf90 import AIremlf90
 from .remlf90 import Remlf90
 from .renumf90 import Renumf90
-from bpf90tools.parsers.keyword import Keyword
 
 BLUPF90 = 'blupf90'
 REMLF90 = 'remlf90'

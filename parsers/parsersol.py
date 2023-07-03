@@ -28,8 +28,8 @@ class PSolution(IParser, CheckMixin):
 		""" Handler for a file with the results of evaluations of breeding
 		values
 
-		:param file: - path to file solutions
-		:return: - dataFrame table data
+		:param file: - Path to file solutions
+		:return: - DataFrame table data
 		"""
 
 		if isinstance(file, str):
@@ -40,6 +40,7 @@ class PSolution(IParser, CheckMixin):
 				f"The file being transferred could not be processed."
 				f" Check the file - {file.stem}"
 			)
+
 		try:
 			self._read(file)
 
@@ -64,10 +65,9 @@ class PSolution(IParser, CheckMixin):
 			raise e
 
 	def _read(self, pth_file: Path) -> None:
-		"""
+		""" Reading a file
 
-		:param pth_file:
-		:return:
+		:param pth_file: - The path to the file
 		"""
 
 		with pth_file.open(mode="r", encoding="utf-8") as file:

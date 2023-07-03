@@ -24,6 +24,7 @@ class PPed(IParser, CheckMixin):
 		""" The parsing data files pedigree.
 
 		:param pth_file: The path to file renadd.ped - pedigree
+		:return: - Throws an exception when an error occurs
 		"""
 
 		if isinstance(pth_file, str):
@@ -44,14 +45,13 @@ class PPed(IParser, CheckMixin):
 
 		except FileNotFoundError as e1:
 			raise e1
-		except Exception as e:
-			raise e
+		except Exception as e2:
+			raise e2
 
 	def _read(self, file: Path) -> None:
-		"""
+		""" Reading a file
 
-		:param file:
-		:return:
+		:param file: - The path to the file
 		"""
 		with file.open(mode="r", encoding="utf-8") as file:
 			self.__lst_ped = [
