@@ -41,7 +41,7 @@ def merge_lst_df(
     )
 
 
-def run_app(app_file: Path, param_file: Path, dir_cwd: Path = None) -> int:
+def run_app(app_file: Path, param_file: Path, dir_cwd: Path = None) -> bool:
     """
 
     :param app_file:
@@ -66,12 +66,10 @@ def run_app(app_file: Path, param_file: Path, dir_cwd: Path = None) -> int:
         ) as save_file:
             save_file.write(cmd_out.decode())
 
-        code = process.wait()
+    except:
+        return False
 
-    except Exception as e:
-        raise e
-
-    return code
+    return True
 
 
 def calculate_preliminary_variances(feature: pd.Series) -> float:

@@ -4,19 +4,20 @@ from pathlib import Path
 
 
 class Params(object):
+	"""  """
 
 	def __init__(
 			self,
 			file_config: str | Path | None = None,
-			type_model: str = "single"
+			type_model: str = "single"  # or multi
 	) -> None:
 
 		self.type_model = type_model
 		self._file_param = file_config
 
-	def create_config(self, obj_param: dict) -> bool:
+	def create(self, obj_param: dict) -> bool:
 		""" Method that forms the structure of the config and saves it
-		to a file.
+		to a file
 
 		:param obj_param: An object of the dictionary type that stores the
 			structure of the required parameters and from the value for the
@@ -65,13 +66,3 @@ class Params(object):
 		copy_param.update(param)
 
 		return copy_param
-
-	@staticmethod
-	def upgrade_config(def_param, param):
-		pass
-
-	def to_txt(self):
-		pass
-
-	def to_json(self):
-		pass

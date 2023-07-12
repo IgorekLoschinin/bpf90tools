@@ -1,18 +1,8 @@
 #!/usr/bin/venv python
 # coding: utf-8
 from pathlib import Path
-from . import IParser
+from . import IParser, Variance
 from ..utils import CheckMixin
-
-from pydantic import BaseModel
-
-
-class Variance(BaseModel):
-	varG: float = None
-	varE: float = None
-	aic: float = None
-	bic: float = None
-	heritability: float = None
 
 
 class PAIReml(IParser, CheckMixin):

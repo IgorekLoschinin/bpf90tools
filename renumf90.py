@@ -1,71 +1,63 @@
 #!/usr/bin/venv python
 # coding: utf-8
 
-import os
+from pathlib import Path
 
-# from utils._utils import run_exe
+from . import PARAM_FILE, RENUMF90
+from .utils import run_app, CheckMixin
 
 
-class Renumf90(object):
+class Renumf90(CheckMixin):
+	""" Renumbering and quality control be done by RENUMF90, which
+	is also driven by a parameter file. """
 
-	def __init__(self,
-				 path_to_exe: str,
-				 filename_cfg: str) -> None:
+	def __init__(self) -> None:
+		self._par_file = None  # File name
+		self._config = None  # Absolute path for param file
+
+	def renum(self, app: str | Path) -> bool:
+		""" RENUM is a renumbering program to create input (data, pedigree,
+		and parameter) files for BLUPF90 programs and provide basic statistics
+
+		:param app: - Absolute or relative path to renumf90
+		:return: - Returns true if the program started and ran without errors
+			else false
+		:raise: - Exceptions when files do not exist
 		"""
 
-		:param path_to_exe:
-		:param filename_cfg:
-		"""
+		if isinstance(app, str):
+			app = Path(app)
 
-		self.path_to_file_exe = path_to_exe
-		self.filename_config = filename_cfg
+		if not app.is_absolute():
+			app = app.absolute()
 
-	def start(self) -> None:
-		try:
+		if not self.is_file(app):
+			raise FileExistsError(
+				"There is no parameter file in the folder in which "
+				"the application being launched is located."
+			)
 
-			if not self.check_file_cfg():
-				raise Exception(
-					"Application renumf90.exe not found in currently dir."
-				)
+		if app.stem != RENUMF90:
+			raise Exception(f"The program being run is not {RENUMF90}.")
 
-			if not self.check_file_exe():
-				raise Exception(
-					"There is no parameter file in the folder in which "
-					"the application being launched is located."
-				)
+		if self._par_file is not None:
+			self._config = app.parent / self._par_file
 
-			run_exe(self.path_to_file_exe, self.filename_config)
+		else:
+			self._config = app.parent / PARAM_FILE
 
-		except Exception:
-			pass
+		if not self.is_file(self._config):
+			raise FileExistsError(f"{self._par_file} file is not found.")
 
-	def check_file_exe(self) -> bool:
-		""" Check if the file exists in the directory
-		and that it has the .exe extension """
+		if not run_app(app, self._config):
+			return False
 
-		if os.path.isfile(self.path_to_file_exe) and \
-			os.path.exists(self.path_to_file_exe):
-			return True
+		return True
 
-		return False
+	@property
+	def par_file(self) -> str:
+		return PARAM_FILE
 
-	def check_file_cfg(self) -> bool:
-		""" The method checks if the file exists in the directory
-		where the application being launched is located. """
-
-		path_to_file_config = os.path.join(
-			os.path.dirname(self.path_to_file_exe), self.filename_config
-		)
-
-		if os.path.exists(path_to_file_config) and \
-			os.path.isfile(path_to_file_config):
-
-			return True
-
-		return False
-
-
-
-
-
-
+	@par_file.setter
+	def par_file(self, filename: str) -> None:
+		self._par_file = filename
