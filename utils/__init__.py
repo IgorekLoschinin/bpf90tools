@@ -3,3 +3,4 @@
 
 from ._checkmixin import CheckMixin
 from ._utils import *
+from .__os import transform

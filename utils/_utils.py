@@ -5,6 +5,7 @@ from __future__ import annotations
 from pathlib import Path
 from functools import reduce, wraps
 
+import sys
 import time
 import json
 import subprocess
@@ -51,11 +52,19 @@ def run_app(app_file: Path, param_file: Path, dir_cwd: Path = None) -> bool:
     """
 
     try:
+        _args = None
+        match sys.platform:
+            case "win32":
+                _args = [str(app_file)]
+
+            case "linux":
+                _args = [f"ulimit -s unlimited && {app_file}"]
+
         process = subprocess.Popen(
-            args=[f"ulimit -s unlimited && {app_file}"],
+            args=_args,
             stdin=subprocess.PIPE,
             stdout=subprocess.PIPE,
-            cwd=str(dir_cwd),
+            cwd=str(dir_cwd) if dir_cwd is not None else dir_cwd,
             shell=True
         )
         cmd_out, _ = process.communicate(f'{param_file.name}\n'.encode())
@@ -66,7 +75,7 @@ def run_app(app_file: Path, param_file: Path, dir_cwd: Path = None) -> bool:
         ) as save_file:
             save_file.write(cmd_out.decode())
 
-    except:
+    except Exception as e:
         return False
 
     return True

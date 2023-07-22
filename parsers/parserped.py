@@ -40,7 +40,7 @@ class PPed(IParser, CheckMixin):
 			self._read(pth_file)
 
 			self.__data_ped = pd.DataFrame(
-				self.__lst_ped, columns=["nomer", "id"]
+				self.__lst_ped, columns=["nomer", "ID"]
 			)
 
 		except FileNotFoundError as e1:

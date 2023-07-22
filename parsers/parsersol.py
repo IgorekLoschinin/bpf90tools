@@ -52,14 +52,14 @@ class PSolution(IParser, CheckMixin):
 				self.__data_sol.rename(columns={"solution": "EBV"})
 
 			if self.__varg is not None:
-				self.__data_sol["REL"] = self.__data_sol['s.e.'].apply(
+				self.__data_sol["REL"] = self.__data_sol['SE'].apply(
 					lambda x: self._rel_from_sep(x, self.__varg)
 				).astype(np.int16)
 
 				self.__data_sol = self.__data_sol[["EBV", "REL", "level"]]
 
 			else:
-				self.__data_sol = self.__data_sol[["EBV", "s.e.", "level"]]
+				self.__data_sol = self.__data_sol[["EBV", "SE", "level"]]
 
 		except Exception as e:
 			raise e
@@ -78,9 +78,9 @@ class PSolution(IParser, CheckMixin):
 
 			self.__data_sol = pd.DataFrame(list_sol, columns=col_name)
 
-		self.__data_sol = self.__data_sol.astype(
-			{'effect': 'int8', 'solution': 'float64', 's.e.': 'float64'}
-		)
+		self.__data_sol = self.__data_sol.\
+			rename(columns={'s.e.': 'SE'}).\
+			astype({'effect': 'int8', 'solution': 'float64', 'SE': 'float64'})
 
 	@staticmethod
 	def _rel_from_sep(se_data: float, var_gen: float) -> float:

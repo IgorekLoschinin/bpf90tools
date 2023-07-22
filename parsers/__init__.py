@@ -4,15 +4,13 @@
 from .iparser import IParser
 from .parsersol import PSolution
 from .parserped import PPed
-from .parserreml import PReml, Variance
-from .parseraireml import PAIReml
+from .parservar import PVar, Variance
 from .parserparams import PParams
 
 __all__ = [
 	"PSolution",
 	"PPed",
-	"PReml",
-	"PAIReml",
+	"PVar",
 	"PParams",
 	"Variance"
 ]

@@ -1,12 +1,23 @@
 #!/usr/bin/venv python
 # coding: utf-8
+
 from pathlib import Path
-from . import IParser, Variance
+from pydantic import BaseModel
+
+from . import IParser
 from ..utils import CheckMixin
 
 
-class PAIReml(IParser, CheckMixin):
-	""" Processing the file method airemlf90 in which the variance information
+class Variance(BaseModel):
+	varG: float = None
+	varE: float = None
+	aic: float = None
+	bic: float = None
+	heritability: float = None
+
+
+class PVar(IParser, CheckMixin):
+	""" Processing the file method (ai)remlf90 in which the variance information
 	is stored """
 
 	def __init__(self) -> None:
@@ -17,8 +28,8 @@ class PAIReml(IParser, CheckMixin):
 	def values(self) -> Variance | None:
 		return self.__variance
 
-	def parse_file(self, pth_file: str | Path) -> None:
-		""" Parsing the log file of the airemlf90.exe(sh) program
+	def parse_file(self, pth_file: str | Path) -> bool:
+		""" Parsing the log file of the (ai)remlf90.exe(sh) program
 
 		:param pth_file: - The path to the file log
 		"""
@@ -43,21 +54,22 @@ class PAIReml(IParser, CheckMixin):
 						float(self.__lst_strings[self._next_value(line)])
 
 				elif '-2logL' and 'AIC' in line:
-					div_item_on_part = line.split(':')
+					div_item_on_part = tuple(filter(
+						lambda x: x.strip(":")
+						if not self.is_empty(x) and x != '='
+						else None,
+						line.split(" ")
+					))
 
-					for i_part in div_item_on_part:
-						if '-2logL' in i_part:
-							self.__variance.bic = \
-								float(i_part.split('=')[-1].strip())
-
-						elif 'AIC' in i_part:
-							self.__variance.aic = \
-								float(i_part.split('=')[-1].strip())
+					self.__variance.bic = div_item_on_part[1]
+					self.__variance.aic = div_item_on_part[3]
 
 			self._heritability()
 
-		except Exception as exp:
-			raise exp
+		except Exception:
+			return False
+
+		return True
 
 	def _read(self, file: Path) -> None:
 		""" Reading a file
