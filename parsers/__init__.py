@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-from .iparser import IParser
-from .parsersol import PSolution
-from .parserped import PPed
-from .parservar import PVar, Variance
-from .parserparams import PParams
+from ._iparser import IParser
+from ._parsersol import PSolution
+from ._parserped import PPed
+from ._parservar import PVar, Variance
+from ._parserparams import PParams
 
 __all__ = [
 	"PSolution",

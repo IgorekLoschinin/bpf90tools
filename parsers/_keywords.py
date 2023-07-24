@@ -2,7 +2,7 @@
 # coding: utf-8
 
 
-class Settingsf90(object):
+class Keywords(object):
 	RENUMF90_keyword = {
 		"DATAFILE",
 		"TRAITS",

@@ -11,7 +11,7 @@ from . import (
 	If90
 )
 from ..utils import run_app, CheckMixin, transform
-from ..parsers import PSolution, PPed, PParams
+from ..parsers import PSolution, PPed
 
 import pandas as pd
 

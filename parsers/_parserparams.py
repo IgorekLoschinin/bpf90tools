@@ -2,13 +2,13 @@
 # coding: utf-8
 from pathlib import Path
 from . import IParser
-from .settingsf90 import Settingsf90
+from ._keywords import Keywords
 from ..utils import CheckMixin
 
 from collections import defaultdict
 
 
-class PParams(IParser, Settingsf90, CheckMixin):
+class PParams(IParser, Keywords, CheckMixin):
 	""" This is a class that processes a parameter file which is a
 	configuration file for calculating blupf90. """
 

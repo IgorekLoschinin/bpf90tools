@@ -1,16 +1,22 @@
 #!/usr/bin/venv python
 # coding: utf-8
+
 from pathlib import Path
 
 
 class Params(object):
-	"""  """
+	""" Creates a parameter file """
 
 	def __init__(
 			self,
 			file_config: str | Path | None = None,
 			type_model: str = "single"  # or multi
 	) -> None:
+		"""
+		:param file_config: - The name or path to the file in which the
+			program launch options will be written
+		:param type_model: - Model type
+		"""
 
 		self.type_model = type_model
 		self._file_param = file_config
@@ -32,13 +38,8 @@ class Params(object):
 
 		list_param = []
 		for key, value in obj_param.items():
-			if isinstance(value, list):
-
-				for item_value in value:
-					list_param.extend([key, item_value])
-
-			else:
-				list_param.extend([key, value])
+			for item_value in value:
+				list_param.extend([key, item_value])
 
 		with open(self._file_param, 'w') as file_param:
 			file_param.writelines('#PARAMETER FILE\n')
@@ -54,15 +55,3 @@ class Params(object):
 					file_param.writelines(param + '\n')
 
 		return True
-
-	# setter
-	def file_config(self, file: Path) -> None:
-		"""  """
-		self._file_param = file
-
-	@staticmethod
-	def update_config(def_param, param):
-		copy_param = def_param.copy()
-		copy_param.update(param)
-
-		return copy_param
