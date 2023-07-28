@@ -18,6 +18,7 @@ class PPed(IParser, CheckMixin):
 
 	@property
 	def values(self) -> pd.DataFrame | None:
+		""" Return of dataframe - ['nomer', 'ID'] """
 		return self.__data_ped
 
 	def parse_file(self, pth_file: str | Path) -> None:

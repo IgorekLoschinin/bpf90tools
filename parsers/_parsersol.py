@@ -24,12 +24,13 @@ class PSolution(IParser, CheckMixin):
 	def solutions(self) -> pd.DataFrame | None:
 		return self.__data_sol
 
-	def parse_file(self, file: str | Path) -> None:
+	def parse_file(self, file: str | Path) -> bool:
 		""" Handler for a file with the results of evaluations of breeding
 		values
 
 		:param file: - Path to file solutions
-		:return: - DataFrame table data
+		:return: - Returns true if file parsing was successful, false if
+			it failed
 		"""
 
 		if isinstance(file, str):
@@ -43,6 +44,11 @@ class PSolution(IParser, CheckMixin):
 
 		try:
 			self._read(file)
+
+			self.__data_sol = self.__data_sol. \
+				rename(columns={'s.e.': 'SE'}).astype({
+					'effect': 'int8', 'solution': 'float64', 'SE': 'float64'
+				})
 
 			self.__data_sol = self.__data_sol.loc[
 				self.__data_sol.effect == self.__data_sol.effect.max()
@@ -64,6 +70,8 @@ class PSolution(IParser, CheckMixin):
 		except Exception as e:
 			raise e
 
+		return True
+
 	def _read(self, pth_file: Path) -> None:
 		""" Reading a file
 
@@ -77,10 +85,6 @@ class PSolution(IParser, CheckMixin):
 			list_sol = [line.strip().split() for line in file]
 
 			self.__data_sol = pd.DataFrame(list_sol, columns=col_name)
-
-		self.__data_sol = self.__data_sol.\
-			rename(columns={'s.e.': 'SE'}).\
-			astype({'effect': 'int8', 'solution': 'float64', 'SE': 'float64'})
 
 	@staticmethod
 	def _rel_from_sep(se_data: float, var_gen: float) -> float:

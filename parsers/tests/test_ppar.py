@@ -19,7 +19,6 @@ def parser():
 def test_parse_aireml_log_1(parser) -> None:
 	# file = _TEST_FILES / "param1.txt"
 
-	file = "/home/igorek/Документы/DEVPERSONAL/PROJECTS/ebvprojects/devTools/bpf90tools/parsers/tests/dir_f/pparam_f/param3.txt"
 	parser.parse_file(file)
 
 	f = parser.params

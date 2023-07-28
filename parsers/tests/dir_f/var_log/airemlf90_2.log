@@ -3,7 +3,7 @@ AIREMLF90 ver. 1.149
  delta convergence =  0.971293289806E-06
 -2logL =        25.405366     : AIC =        29.405366    
 Genetic variance(s) for effect  4       
-   448.97    
+   448.97
 Residual variance(s)
   0.14365E-03
 inverse of AI matrix (Sampling Variance)

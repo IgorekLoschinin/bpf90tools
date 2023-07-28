@@ -37,6 +37,9 @@ class PVar(IParser, CheckMixin):
 		if isinstance(pth_file, str):
 			pth_file = Path(pth_file)
 
+		if not pth_file.is_absolute():
+			pth_file = pth_file.absolute()
+
 		if not self.is_file(pth_file):
 			raise OSError(f"The path - {pth_file.stem}, passed is not a file!")
 
@@ -61,8 +64,8 @@ class PVar(IParser, CheckMixin):
 						line.split(" ")
 					))
 
-					self.__variance.bic = div_item_on_part[1]
-					self.__variance.aic = div_item_on_part[3]
+					self.__variance.bic = float(div_item_on_part[1])
+					self.__variance.aic = float(div_item_on_part[3])
 
 			self._heritability()
 
@@ -96,10 +99,11 @@ class PVar(IParser, CheckMixin):
 		differences between individuals """
 
 		try:
-			self.__variance.heritability = round(
-				self.__variance.varG / (
-						self.__variance.varG + self.__variance.varE
-				), 3)
+			if (self.__variance.varE and self.__variance.varG) is not None:
+				self.__variance.heritability = round(
+					self.__variance.varG / (
+							self.__variance.varG + self.__variance.varE
+					), 3)
 
 		except ZeroDivisionError:
 			self.__variance.heritability = 0
