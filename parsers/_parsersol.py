@@ -45,27 +45,30 @@ class PSolution(IParser, CheckMixin):
 		try:
 			self._read(file)
 
-			self.__data_sol = self.__data_sol. \
-				rename(columns={'s.e.': 'SE'}).astype({
-					'effect': 'int8', 'solution': 'float64', 'SE': 'float64'
-				})
+			if "s.e." in self.__data_sol.columns:
+				self.__data_sol = self.__data_sol.\
+					rename(columns={"s.e.": "SE", "solution": "EBV"}).\
+					astype({'effect': 'int8', 'EBV': 'float64', 'SE': 'float64'}).\
+					loc[self.__data_sol.effect == self.__data_sol.effect.max()]
 
-			self.__data_sol = self.__data_sol.loc[
-				self.__data_sol.effect == self.__data_sol.effect.max()
-			]
+				if self.__varg is not None:
+					self.__data_sol["REL"] = self.__data_sol['SE'].apply(
+						lambda x: self._rel_from_sep(x, self.__varg)
+					).astype(np.int16)
 
-			self.__data_sol = \
-				self.__data_sol.rename(columns={"solution": "EBV"})
+					self.__data_sol = self.__data_sol[["EBV", "REL", "level"]]
 
-			if self.__varg is not None:
-				self.__data_sol["REL"] = self.__data_sol['SE'].apply(
-					lambda x: self._rel_from_sep(x, self.__varg)
-				).astype(np.int16)
-
-				self.__data_sol = self.__data_sol[["EBV", "REL", "level"]]
+				else:
+					self.__data_sol = self.__data_sol[["EBV", "SE", "level"]]
 
 			else:
-				self.__data_sol = self.__data_sol[["EBV", "SE", "level"]]
+				self.__data_sol = self.__data_sol. \
+					rename(columns={"solution": "EBV"}). \
+					astype({'effect': 'int8', 'EBV': 'float64'}). \
+					loc[
+						self.__data_sol.effect == self.__data_sol.effect.max(),
+						["EBV", "level"]
+					]
 
 		except Exception as e:
 			raise e
@@ -101,3 +104,11 @@ class PSolution(IParser, CheckMixin):
 			return 0
 
 		return np.floor(h)
+
+	@property
+	def _varg(self) -> float | None:
+		return self.__varg
+
+	@_varg.setter
+	def _varg(self, value: float) -> None:
+		self.__varg = value

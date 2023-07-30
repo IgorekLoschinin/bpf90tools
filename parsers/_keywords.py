@@ -78,3 +78,11 @@ class Keywords(object):
 		BLUPF90_keyword | \
 		REMLF90_keyword | \
 		AIREMLF90_keyword
+
+	@property
+	def single_par(self) -> None:
+		pass
+
+	@property
+	def complex_par(self) -> None:
+		pass

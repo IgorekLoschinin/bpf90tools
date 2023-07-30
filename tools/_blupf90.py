@@ -102,6 +102,8 @@ class Blupf90(If90, CheckMixin):
 			right_on="level"
 		).drop(columns=["level", "nomer"])
 
+		return True
+
 	def __handler_sol(self, pth_file: Path) -> pd.DataFrame:
 		""" Results file handler with breeding value and estimation accuracy
 

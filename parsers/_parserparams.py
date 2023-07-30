@@ -21,7 +21,7 @@ class PParams(IParser, Keywords, CheckMixin):
 		values """
 		return self.__data_param
 
-	def parse_file(self, pth_file: str) -> None:
+	def parse_file(self, pth_file: str | Path) -> bool:
 		""" Parsing the param.txt file
 
 		:param pth_file: - The path to the file param.txt
@@ -58,6 +58,8 @@ class PParams(IParser, Keywords, CheckMixin):
 
 		except Exception as exp:
 			raise exp
+
+		return True
 
 	def _read(self, pth_file: str | Path) -> None | list:
 		""" Reading a file

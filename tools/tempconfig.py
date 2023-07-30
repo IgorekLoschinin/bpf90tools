@@ -11,7 +11,9 @@ BASE_TEMPLET_SINGLE_BLUP = {
 	'FILE': [''],
 	'FILE_POS': ['1 2 3 0 0'],
 	'(CO)VARIANCES': ['0'],
-	'OPTION': ['sol se', 'alpha_size 40'],
+	'OPTION sol': ['se'],
+	'OPTION alpha_size': ['40'],
+
 }
 
 BASE_TEMPLET_SINGLE_GBLUP = {
@@ -25,5 +27,6 @@ BASE_TEMPLET_SINGLE_GBLUP = {
 	'FILE_POS': ['1 2 3 0 0'],
 	'SNP_FILE': [""],
 	'(CO)VARIANCES': ['0'],
-	'OPTION': ['sol se', 'alpha_size 40'],
+	'OPTION sol': ['se'],
+	'OPTION alpha_size': ['40'],
 }

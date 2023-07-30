@@ -48,7 +48,7 @@ class Params(object):
 				if param in ['RESIDUAL_VARIANCE', '(CO)VARIANCES']:
 					file_param.writelines(param + '\n\t')
 
-				elif param == 'OPTION':
+				elif param.startswith("OPTION") or param.startswith("COMBINE"):
 					file_param.writelines(param + ' ')
 
 				else:
