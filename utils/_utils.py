@@ -9,12 +9,13 @@ import subprocess
 
 
 def run_app(app_file: Path, param_file: Path, dir_cwd: Path = None) -> bool:
-    """
+    """ Running programs of the blupf90 family
 
-    :param app_file:
-    :param param_file:
-    :param dir_cwd:
-    :return:
+    :param app_file: - Application to run
+    :param param_file: - Parameter file that is needed to run the application
+    :param dir_cwd: - Directory where the application is located
+    :return: - Returns true if the method completed without errors, false if
+        an error or exception occurred
     """
 
     try:

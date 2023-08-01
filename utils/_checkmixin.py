@@ -51,27 +51,3 @@ class CheckMixin(object):
             return False
 
         return True
-
-    @staticmethod
-    def is_ext(obj: str | Path, ext: str | tuple) -> bool:
-        """ File extension is checked.
-
-        :param obj: - The object whose extension is being checked
-        :param ext: - Extension type to check
-        :return: - Returns true if the object of the extension being searched
-                        for, false if there is no match
-        """
-
-        if isinstance(obj, str) and not isinstance(ext, tuple):
-            if Path(obj).suffix.lstrip('.') == ext.lstrip('.'):
-                return True
-
-        else:
-            if obj.endswith(ext):
-                return True
-
-        if isinstance(obj, Path) and not isinstance(ext, tuple):
-            if obj.suffix.lstrip('.') == ext.lstrip('.'):
-                return True
-
-        return False
