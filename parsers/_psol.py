@@ -98,12 +98,12 @@ class PSolution(IParser, CheckMixin):
 		:param var_gen: - Genetic variance calculated by remlf90
 		:return: - The return reliability
 		"""
-		h = (1 - (se_data ** 2) / var_gen) * 100
+		rel = (1 - (se_data ** 2) / var_gen) * 100
 
-		if h < 0:
-			return 0
+		if rel < 0:
+			return 0.0
 
-		return np.floor(h)
+		return np.floor(rel)
 
 	@property
 	def _varg(self) -> float | None:
