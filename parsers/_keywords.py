@@ -73,16 +73,42 @@ class Keywords(object):
 		"OPTION se_covar_function",
 	}
 
-	all_join_keyword = \
-		RENUMF90_keyword | \
-		BLUPF90_keyword | \
-		REMLF90_keyword | \
-		AIREMLF90_keyword
+	@property
+	def unique_keywords(self) -> set[str]:
+		return \
+			self.__class__.RENUMF90_keyword | \
+			self.__class__.BLUPF90_keyword | \
+			self.__class__.REMLF90_keyword | \
+			self.__class__.AIREMLF90_keyword
 
 	@property
-	def single_par(self) -> None:
-		pass
+	def single_par(self) -> set[str]:
+		return {
+			'DATAFILE',
+			'EFFECT',
+			'FILE',
+			'FILE_POS',
+			'GEN_INT',
+			'INBREEDING',
+			'NESTED',
+			'OPTIONAL',
+			'PED_DEPTH',
+			'RANDOM',
+			'REC_SEX',
+			'RESIDUAL_VARIANCE',
+			'SNP_FILE',
+			'TRAITS',
+			'UPG_TYPE',
+			'WEIGHT(S)',
+			'(CO)VARIANCES',
+			'(CO)VARIANCES_MPE',
+			'(CO)VARIANCES_PE',
+			'FIELDS_PASSED TO OUTPUT',
+		}
 
 	@property
-	def complex_par(self) -> None:
-		pass
+	def complex_par(self) -> set[str]:
+		return {
+			'COMBINE',
+			'OPTION'
+		}

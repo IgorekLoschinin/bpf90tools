@@ -31,10 +31,10 @@ class PParams(IParser, Keywords, CheckMixin):
 		if isinstance(pth_file, str):
 			pth_file = Path(pth_file)
 
-		try:
-			if not self.is_file(pth_file):
-				raise OSError("File param.txt not found!")
+		if not self.is_file(pth_file):
+			raise OSError("File param.txt not found!")
 
+		try:
 			lines = self._read(pth_file)
 
 			key_word_par = ""
@@ -42,13 +42,12 @@ class PParams(IParser, Keywords, CheckMixin):
 				if line.strip().startswith('#'):
 					continue
 
-				if line.startswith("OPTION") or line.startswith("COMBINE"):
+				if line.strip().split(" ", 1)[0] in self.complex_par:
 					opt, value = line.strip().split(" ", 1)
-
 					self.__data_param[opt].append(value)
 
 				else:
-					if line.strip() in self.__class__.all_join_keyword:
+					if line.strip() in self.single_par:
 						if line.strip() in self.__data_param.keys():
 							pass
 						else:
