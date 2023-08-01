@@ -1,6 +1,7 @@
 #!/usr/bin/venv python
 # coding: utf-8
 from pathlib import Path
+
 from . import IParser
 from ..utils import CheckMixin
 
@@ -21,7 +22,7 @@ class PPed(IParser, CheckMixin):
 		""" Return of dataframe - ['nomer', 'ID'] """
 		return self.__data_ped
 
-	def parse_file(self, pth_file: str | Path) -> None:
+	def parse_file(self, pth_file: str | Path) -> bool:
 		""" The parsing data files pedigree.
 
 		:param pth_file: The path to file renadd.ped - pedigree
@@ -30,6 +31,9 @@ class PPed(IParser, CheckMixin):
 
 		if isinstance(pth_file, str):
 			pth_file = Path(pth_file)
+
+		if not pth_file.is_absolute():
+			pth_file = pth_file.absolute()
 
 		if not self.is_file(pth_file):
 			raise OSError(
@@ -44,18 +48,18 @@ class PPed(IParser, CheckMixin):
 				self.__lst_ped, columns=["nomer", "ID"]
 			)
 
-		except FileNotFoundError as e1:
-			raise e1
-		except Exception as e2:
-			raise e2
+		except Exception as e:
+			raise e
+
+		return True
 
 	def _read(self, file: Path) -> None:
 		""" Reading a file
 
 		:param file: - The path to the file
 		"""
-		with file.open(mode="r", encoding="utf-8") as file:
+		with file.open(mode="r", encoding="utf-8") as obj_file:
 			self.__lst_ped = [
 				[item.strip().split()[0], item.strip().split()[-1]]
-				for item in file
+				for item in obj_file
 			]

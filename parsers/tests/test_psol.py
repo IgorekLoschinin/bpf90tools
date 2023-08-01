@@ -3,7 +3,7 @@
 from pathlib import Path
 
 from . import _DIR_FILES
-from .._parsersol import PSolution
+from .. import PSolution
 
 import pytest
 

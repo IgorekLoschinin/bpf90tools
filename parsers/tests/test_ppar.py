@@ -3,7 +3,7 @@
 from pathlib import Path
 from deepdiff import DeepDiff
 
-from .._parserparams import PParams
+from .. import PParams
 from . import _DIR_FILES
 
 import pytest
