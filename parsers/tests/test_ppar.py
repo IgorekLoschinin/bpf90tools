@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 from pathlib import Path
-from deepdiff import DeepDiff
 
 from .. import PParams
 from . import _DIR_FILES
@@ -45,7 +44,7 @@ def test_bp_params_1(obj_pparams) -> None:
 	}
 
 	assert obj_pparams.parse_file(_file)
-	assert len(DeepDiff(valid_struct, dict(obj_pparams.params))) == 0
+	assert valid_struct == pytest.approx(obj_pparams.params)
 
 
 def test_bp_params_2(obj_pparams) -> None:
@@ -67,7 +66,7 @@ def test_bp_params_2(obj_pparams) -> None:
 	}
 
 	assert obj_pparams.parse_file(_file)
-	assert len(DeepDiff(valid_struct, dict(obj_pparams.params))) == 0
+	assert valid_struct == pytest.approx(obj_pparams.params)
 
 
 def test_bp_params_3(obj_pparams) -> None:
@@ -92,7 +91,7 @@ def test_bp_params_3(obj_pparams) -> None:
 	}
 
 	assert obj_pparams.parse_file(_file)
-	assert len(DeepDiff(valid_struct, dict(obj_pparams.params))) != 0
+	assert valid_struct != pytest.approx(obj_pparams.params)
 
 
 def test_bp_params_4(obj_pparams) -> None:
@@ -100,7 +99,7 @@ def test_bp_params_4(obj_pparams) -> None:
 	valid_struct = {}
 
 	assert obj_pparams.parse_file(_file)
-	assert len(DeepDiff(valid_struct, dict(obj_pparams.params))) == 0
+	assert valid_struct == pytest.approx(obj_pparams.params)
 
 
 def test_bp_params_5(obj_pparams) -> None:
@@ -126,4 +125,4 @@ def test_bp_params_5(obj_pparams) -> None:
 	}
 
 	assert obj_pparams.parse_file(_file)
-	assert len(DeepDiff(valid_struct, dict(obj_pparams.params))) == 0
+	assert valid_struct == pytest.approx(obj_pparams.params)
