@@ -1,13 +1,10 @@
 #!/usr/bin/venv python
 # coding: utf-8
-from pathlib import Path
+
 from pytest import fixture, raises
 
 from .. import PVar
 from . import _DIR_FILES
-
-
-_TEST_FILES = Path(_DIR_FILES) / "var_log"
 
 
 @fixture
@@ -16,7 +13,7 @@ def parser():
 
 
 def test_file_no_exists(parser):
-	file_no_exists = _TEST_FILES / "_file.txt"
+	file_no_exists = _DIR_FILES / "var_log/_file.txt"
 
 	with raises(
 			OSError,
@@ -26,7 +23,7 @@ def test_file_no_exists(parser):
 
 
 def test_no_var_log(parser) -> None:
-	file = _TEST_FILES / "no_file.txt"
+	file = _DIR_FILES / "var_log/no_file.txt"
 
 	assert parser.parse_file(file)
 
@@ -38,7 +35,7 @@ def test_no_var_log(parser) -> None:
 
 
 def test_aireml_log_1(parser) -> None:
-	file = _TEST_FILES / "airemlf90_1.log"
+	file = _DIR_FILES / "var_log/airemlf90_1.log"
 
 	assert parser.parse_file(file)
 
@@ -49,7 +46,7 @@ def test_aireml_log_1(parser) -> None:
 
 
 def test_aireml_log_2(parser) -> None:
-	file = _TEST_FILES / "airemlf90_2.log"
+	file = _DIR_FILES / "var_log/airemlf90_2.log"
 
 	assert parser.parse_file(file)
 
@@ -64,7 +61,7 @@ def test_aireml_log_2(parser) -> None:
 
 
 def test_aireml_log_3(parser) -> None:
-	file = _TEST_FILES / "airemlf90_3.log"
+	file = _DIR_FILES / "var_log/airemlf90_3.log"
 
 	assert parser.parse_file(file)
 
@@ -76,7 +73,7 @@ def test_aireml_log_3(parser) -> None:
 
 
 def test_reml_log_1(parser) -> None:
-	file = _TEST_FILES / "remlf90_1.log"
+	file = _DIR_FILES / "var_log/remlf90_1.log"
 
 	assert parser.parse_file(file)
 
@@ -87,7 +84,7 @@ def test_reml_log_1(parser) -> None:
 
 
 def test_reml_log_2(parser) -> None:
-	file = _TEST_FILES / "remlf90_2.log"
+	file = _DIR_FILES / "var_log/remlf90_2.log"
 
 	assert parser.parse_file(file)
 
@@ -102,7 +99,7 @@ def test_reml_log_2(parser) -> None:
 
 
 def test_reml_log_3(parser) -> None:
-	file = _TEST_FILES / "remlf90_3.log"
+	file = _DIR_FILES / "var_log/remlf90_3.log"
 
 	assert parser.parse_file(file)
 

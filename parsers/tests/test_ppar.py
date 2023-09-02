@@ -1,13 +1,11 @@
 #!/usr/bin/env python
 # coding: utf-8
-from pathlib import Path
 
 from .. import PParams
 from . import _DIR_FILES
+from deepdiff import DeepDiff
 
 import pytest
-
-_FILES_PPARAMS = Path(_DIR_FILES) / "pparam_f"
 
 
 @pytest.fixture
@@ -16,14 +14,14 @@ def obj_pparams():
 
 
 def test_not_params(obj_pparams) -> None:
-	_file = _FILES_PPARAMS / "param123113.txt"
+	_file = _DIR_FILES / "pparam_f/param123113.txt"
 
 	with pytest.raises(OSError, match="File param.txt not found!"):
 		obj_pparams.parse_file(_file)
 
 
 def test_bp_params_1(obj_pparams) -> None:
-	_file = _FILES_PPARAMS / "param1.txt"
+	_file = _DIR_FILES / "pparam_f/param1.txt"
 	valid_struct = {
 		'DATAFILE': ['phen.txt'],
 		'TRAITS': ['5'],
@@ -44,11 +42,11 @@ def test_bp_params_1(obj_pparams) -> None:
 	}
 
 	assert obj_pparams.parse_file(_file)
-	assert valid_struct == pytest.approx(obj_pparams.params)
+	assert len(DeepDiff(valid_struct, dict(obj_pparams.params))) == 0
 
 
 def test_bp_params_2(obj_pparams) -> None:
-	_file = _FILES_PPARAMS / "param2.txt"
+	_file = _DIR_FILES / "pparam_f/param2.txt"
 	valid_struct = {
 		'DATAFILE': ['phen.txt'],
 		'TRAITS': ['5'],
@@ -66,11 +64,11 @@ def test_bp_params_2(obj_pparams) -> None:
 	}
 
 	assert obj_pparams.parse_file(_file)
-	assert valid_struct == pytest.approx(obj_pparams.params)
+	assert len(DeepDiff(valid_struct, dict(obj_pparams.params))) == 0
 
 
 def test_bp_params_3(obj_pparams) -> None:
-	_file = _FILES_PPARAMS / "param3.txt"
+	_file = _DIR_FILES / "pparam_f/param3.txt"
 	valid_struct = {
 		'DATAFILE': ['phen.txt'],
 		'TRAITS': ['5'],
@@ -91,19 +89,19 @@ def test_bp_params_3(obj_pparams) -> None:
 	}
 
 	assert obj_pparams.parse_file(_file)
-	assert valid_struct != pytest.approx(obj_pparams.params)
+	assert len(DeepDiff(valid_struct, dict(obj_pparams.params))) != 0
 
 
 def test_bp_params_4(obj_pparams) -> None:
-	_file = _FILES_PPARAMS / "param4.txt"
+	_file = _DIR_FILES / "pparam_f/param4.txt"
 	valid_struct = {}
 
 	assert obj_pparams.parse_file(_file)
-	assert valid_struct == pytest.approx(obj_pparams.params)
+	assert len(DeepDiff(valid_struct, dict(obj_pparams.params))) == 0
 
 
 def test_bp_params_5(obj_pparams) -> None:
-	_file = _FILES_PPARAMS / "param5.txt"
+	_file = _DIR_FILES / "pparam_f/param5.txt"
 	valid_struct = {
 		'DATAFILE': ['phen.txt'],
 		'TRAITS': ['5'],
@@ -125,4 +123,4 @@ def test_bp_params_5(obj_pparams) -> None:
 	}
 
 	assert obj_pparams.parse_file(_file)
-	assert valid_struct == pytest.approx(obj_pparams.params)
+	assert len(DeepDiff(valid_struct, dict(obj_pparams.params))) == 0
