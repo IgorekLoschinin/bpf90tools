@@ -3,9 +3,10 @@
 
 from pathlib import Path
 
+from ._if90 import If90
 from ..parsers import PVar, Variance
 from ..utils import run_app, CheckMixin, transform
-from . import AIREMLF90, RENF90_PAR, AIREMLF90_LOG, If90
+from .settings import (AIREMLF90, RENF90_PAR, AIREMLF90_LOG)
 
 
 class AIremlf90(If90, CheckMixin):

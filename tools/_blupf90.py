@@ -3,15 +3,16 @@
 
 from pathlib import Path
 
-from . import (
+from ._if90 import If90
+from .settings import (
 	BLUPF90,
 	RENF90_PAR,
 	SOLUTIONS,
-	RENADD,
-	If90
+	RENADD
 )
-from ..utils import run_app, CheckMixin, transform
 from ..parsers import PSolution, PPed
+from ..utils import run_app, CheckMixin, transform
+
 
 import pandas as pd
 

@@ -3,7 +3,8 @@
 
 from pathlib import Path
 
-from . import PARAM_FILE, RENUMF90, If90
+from ._if90 import If90
+from .settings import PARAM_FILE, RENUMF90
 from ..utils import run_app, CheckMixin, transform
 
 
