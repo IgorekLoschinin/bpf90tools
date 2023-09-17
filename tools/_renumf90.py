@@ -46,14 +46,14 @@ class Renumf90(If90, CheckMixin):
 		if not self.is_dir(self._work_dir):
 			raise OSError("Directory does not exist.")
 
-		if self._app != transform(RENUMF90):
-			raise Exception(f"The program being run is not {self._app}.")
-
 		if self._par_file is not None:
 			self._config = self._work_dir / self._par_file
 
 		else:
 			self._config = self._work_dir / PARAM_FILE
+
+		if self._app != transform(RENUMF90):
+			raise Exception(f"The program being run is not {self._app}.")
 
 		if not self.is_file(self._config):
 			raise OSError(f"{self._config} file is not found.")

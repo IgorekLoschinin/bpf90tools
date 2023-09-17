@@ -27,3 +27,4 @@ class If90(ABC):
 	@abstractmethod
 	def run(self) -> bool:
 		raise NotImplementedError
+
