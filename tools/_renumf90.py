@@ -52,11 +52,11 @@ class Renumf90(If90, CheckMixin):
 		else:
 			self._config = self._work_dir / PARAM_FILE
 
-		if self._app != transform(RENUMF90):
-			raise Exception(f"The program being run is not {self._app}.")
-
 		if not self.is_file(self._config):
 			raise OSError(f"{self._config} file is not found.")
+
+		if self._app != transform(RENUMF90):
+			raise ValueError(f"The program being run is not {self._app}.")
 
 		_app_file = self._work_dir / self._app
 		if not run_app(_app_file, self._config, dir_cwd=self._work_dir):
