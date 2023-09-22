@@ -20,12 +20,14 @@ class Remlf90(If90, CheckMixin):
 			*,
 			app: str,
 			work_dir: str | Path,
+			fn_par: str | None = None
 	) -> None:
 		"""
 		:param app: - The name of the program
 		:param work_dir: - Directory where all programs and files are located
+		:param fn_par: - The name of the parameter file with settings
 		"""
-		If90.__init__(self, app=app, work_dir=work_dir)
+		If90.__init__(self, app=app, work_dir=work_dir, fn_par=fn_par)
 
 		self.__parser = PVar()
 
@@ -46,20 +48,28 @@ class Remlf90(If90, CheckMixin):
 		if not self.is_dir(self._work_dir):
 			raise OSError("Directory does not exist.")
 
-		if self._app != transform(REMLF90):
-			raise Exception(f"The program being run is not {self._app}.")
+		# Define file param
+		if self._par_file is not None:
+			_config = self._work_dir / self._par_file
 
-		_par_file = self._work_dir / RENF90_PAR
-		if not self.is_file(_par_file):
-			raise FileExistsError(f"{RENF90_PAR} file is not found.")
+		else:
+			_config = self._work_dir / RENF90_PAR
+
+		if not self.is_file(_config):
+			raise OSError("File is not found. The first run renum!")
+
+		# Run app
+		if self._app != transform(REMLF90):
+			raise ValueError(f"The program being run is not {self._app}.")
 
 		_app_file = self._work_dir / self._app
-		if not run_app(_app_file, _par_file, dir_cwd=self._work_dir):
+		if not run_app(_app_file, _config, dir_cwd=self._work_dir):
 			return False
 
+		# Getting variance
 		_file_log = self._work_dir / REMLF90_LOG
 		if not self.is_file(_file_log):
-			raise OSError(f"{_file_log} file is not found.")
+			raise OSError("remlf90.log file is not found.")
 
 		if not self.__parser.parse_file(_file_log):
 			return False

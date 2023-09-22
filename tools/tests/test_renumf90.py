@@ -59,7 +59,7 @@ class TestRenumf90(object):
 	def test_renum_raise_of_work_dir(self, obj_renum: Renumf90) -> None:
 
 		with pytest.raises(OSError, match="Directory does not exist."):
-			assert obj_renum.run()
+			obj_renum.run()
 
 	@pytest.mark.parametrize(
 		"kwargs", [{"app": "renumf90", "fn_par": "param1.txt"}]
@@ -70,7 +70,7 @@ class TestRenumf90(object):
 		_renum = Renumf90(**kwargs, work_dir=make_space_preparation)
 
 		with pytest.raises(OSError):
-			assert _renum.run()
+			_renum.run()
 
 		assert not (make_space_preparation / "renf90.par").exists()
 
@@ -100,7 +100,7 @@ class TestRenumf90(object):
 		with pytest.raises(
 				ValueError, match=f"The program being run is not {_app}."
 		):
-			assert _renum.run()
+			_renum.run()
 
 	@pytest.mark.parametrize(
 		"kwargs", [{"app": "renumf90", "fn_par": "param_fail.txt"}]

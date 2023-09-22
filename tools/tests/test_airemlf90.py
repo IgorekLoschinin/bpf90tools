@@ -14,7 +14,7 @@ from .. import AIremlf90
 from ..settings import AIREMLF90, RENF90_PAR
 from bpf90tools.utils import transform
 
-_DIR_AIREML = _DIR_FILES / "var"
+_DIR_AIREML = _DIR_FILES / "common"
 
 
 @pytest.fixture
@@ -58,7 +58,7 @@ class TestAIRemlf90(object):
 	def test_aireml_raise_of_work_dir(self, obj_aireml: AIremlf90) -> None:
 
 		with pytest.raises(OSError, match="Directory does not exist."):
-			assert obj_aireml.run()
+			obj_aireml.run()
 
 	@pytest.mark.parametrize(
 		"kwargs", [{"app": "airemlf90", "fn_par": "renf90.par1"}]
@@ -71,7 +71,7 @@ class TestAIRemlf90(object):
 		with pytest.raises(
 				OSError, match="File is not found. The first run renum!"
 		):
-			assert _aireml.run()
+			_aireml.run()
 
 		assert all(list(map(
 			lambda x: True if x is None else False,
@@ -104,15 +104,22 @@ class TestAIRemlf90(object):
 		with pytest.raises(
 				ValueError, match=f"The program being run is not {_app}."
 		):
-			assert _aireml.run()
+			_aireml.run()
 
-	# @pytest.mark.parametrize(
-	# 	"kwargs", [{"app": "renumf90", "fn_par": "param_fail.txt"}]
-	# )
-	# def test_aireml_fail_run_app(
-	# 		self, kwargs: dict, make_space_preparation: Path
-	# ) -> None:
-	# 	_renum = Renumf90(**kwargs, work_dir=make_space_preparation)
-	# 	_renum.run()
-	#
-	# 	assert not (make_space_preparation / "renf90.par").exists()
+	@pytest.mark.parametrize(
+		"kwargs", [{"app": "airemlf90", "fn_par": "renf90_fail.par"}]
+	)
+	def test_aireml_fail_run_app_exists_log(
+			self, kwargs: dict, make_space_preparation: Path
+	) -> None:
+		shutil.copy2(_DIR_FILES / "var/renf90_fail.par", make_space_preparation)
+
+		_aireml = AIremlf90(**kwargs, work_dir=make_space_preparation)
+
+		with pytest.raises(OSError, match="airemlf90.log file is not found."):
+			_aireml.run()
+
+		assert all(list(map(
+			lambda x: True if x is None else False,
+			_aireml.variance.dict().values()
+		)))

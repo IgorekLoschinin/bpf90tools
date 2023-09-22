@@ -76,7 +76,7 @@ class AIremlf90(If90, CheckMixin):
 		# Getting variance
 		_file_log = self._work_dir / AIREMLF90_LOG
 		if not self.is_file(_file_log):
-			raise OSError(f"{_file_log} file is not found.")
+			raise OSError("airemlf90.log file is not found.")
 
 		if not self.__parser.parse_file(_file_log):
 			return False
