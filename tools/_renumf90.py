@@ -26,8 +26,6 @@ class Renumf90(If90, CheckMixin):
 		"""
 		If90.__init__(self, app=app, work_dir=work_dir, fn_par=fn_par)
 
-		self._config = None  # Absolute path for param file
-
 	def run(self) -> bool:
 		""" RENUM is a renumbering program to create input (data, pedigree,
 		and parameter) files for BLUPF90 programs and provide basic statistics
@@ -47,19 +45,19 @@ class Renumf90(If90, CheckMixin):
 			raise OSError("Directory does not exist.")
 
 		if self._par_file is not None:
-			self._config = self._work_dir / self._par_file
+			_config = self._work_dir / self._par_file
 
 		else:
-			self._config = self._work_dir / PARAM_FILE
+			_config = self._work_dir / PARAM_FILE
 
-		if not self.is_file(self._config):
-			raise OSError(f"{self._config} file is not found.")
+		if not self.is_file(_config):
+			raise OSError(f"{_config} file is not found.")
 
 		if self._app != transform(RENUMF90):
 			raise ValueError(f"The program being run is not {self._app}.")
 
 		_app_file = self._work_dir / self._app
-		if not run_app(_app_file, self._config, dir_cwd=self._work_dir):
+		if not run_app(_app_file, _config, dir_cwd=self._work_dir):
 			return False
 
 		return True

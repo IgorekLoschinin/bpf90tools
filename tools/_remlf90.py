@@ -1,6 +1,8 @@
 #!/usr/bin/venv python
 # coding: utf-8
 
+__author__ = "Igor Loschinin (igor.loschinin@gmail.com)"
+
 from pathlib import Path
 
 from ._if90 import If90

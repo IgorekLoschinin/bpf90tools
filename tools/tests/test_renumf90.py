@@ -14,6 +14,8 @@ from .. import Renumf90
 from ..settings import RENUMF90
 from bpf90tools.utils import transform
 
+_DIR_RENUM = _DIR_FILES / "renum"
+
 
 @pytest.fixture
 def make_space_preparation(tmp_path) -> Path:
@@ -26,7 +28,7 @@ def make_space_preparation(tmp_path) -> Path:
 	if sys.platform == "win32":
 		shutil.copy2(_DIR_UTILS / "libiomp5md.dll", _dir_renum)
 
-	for item in _DIR_FILES.glob("./*"):
+	for item in _DIR_RENUM.glob("./*"):
 		shutil.copy2(
 			item, _dir_renum
 		)
@@ -35,7 +37,7 @@ def make_space_preparation(tmp_path) -> Path:
 
 
 @pytest.fixture
-def obj_renum(request, make_space_preparation) -> Renumf90:
+def obj_renum(request, make_space_preparation: Path) -> Renumf90:
 	return Renumf90(
 		app="renumf90",
 		work_dir=make_space_preparation if request.param is None else request.param,

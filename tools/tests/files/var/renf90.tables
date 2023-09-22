@@ -1,0 +1,10 @@
+ Effect group 1 of column 1 with 2 levels, effect # 1
+ Value    #    consecutive number
+A 5 1 
+B 4 2 
+ Effect group 2 of column 1 with 4 levels, effect # 2
+ Value    #    consecutive number
+1 2 1 
+2 3 2 
+3 2 3 
+4 2 4 

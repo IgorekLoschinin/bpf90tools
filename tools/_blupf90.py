@@ -1,6 +1,10 @@
 #!/usr/bin/venv python
 # coding: utf-8
 
+__author__ = "Igor Loschinin (igor.loschinin@gmail.com)"
+
+import pandas as pd
+
 from pathlib import Path
 
 from ._if90 import If90
@@ -12,9 +16,6 @@ from .settings import (
 )
 from ..parsers import PSolution, PPed
 from ..utils import run_app, CheckMixin, transform
-
-
-import pandas as pd
 
 
 class Blupf90(If90, CheckMixin):
