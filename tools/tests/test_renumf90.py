@@ -11,7 +11,7 @@ from pathlib import Path
 
 from . import _DIR_UTILS, _DIR_FILES
 from .. import Renumf90
-from ..settings import RENUMF90
+from ..settings import RENUMF90, PARAM_FILE
 from bpf90tools.utils import transform
 
 _DIR_RENUM = _DIR_FILES / "renum"
@@ -39,9 +39,9 @@ def make_space_preparation(tmp_path) -> Path:
 @pytest.fixture
 def obj_renum(request, make_space_preparation: Path) -> Renumf90:
 	return Renumf90(
-		app="renumf90",
+		app=transform(RENUMF90),
 		work_dir=make_space_preparation if request.param is None else request.param,
-		fn_par="param.txt"
+		fn_par=PARAM_FILE
 	)
 
 
@@ -62,7 +62,7 @@ class TestRenumf90(object):
 			obj_renum.run()
 
 	@pytest.mark.parametrize(
-		"kwargs", [{"app": "renumf90", "fn_par": "param1.txt"}]
+		"kwargs", [{"app": transform(RENUMF90), "fn_par": "param1.txt"}]
 	)
 	def test_renum_raise_config(
 			self, kwargs: dict, make_space_preparation: Path
@@ -78,24 +78,19 @@ class TestRenumf90(object):
 			self, make_space_preparation: Path
 	) -> None:
 		_app = None
-		_renum = None
 
 		match sys.platform:
 			case "linux":
 				_app = "renumf90.exe"
-				_renum = Renumf90(
-					app=_app,
-					work_dir=make_space_preparation,
-					fn_par="param.txt"
-				)
 
 			case "win32":
 				_app = "renumf90"
-				_renum = Renumf90(
-					app=_app,
-					work_dir=make_space_preparation,
-					fn_par="param.txt"
-				)
+
+		_renum = Renumf90(
+			app=_app,
+			work_dir=make_space_preparation,
+			fn_par=PARAM_FILE
+		)
 
 		with pytest.raises(
 				ValueError, match=f"The program being run is not {_app}."
@@ -103,11 +98,15 @@ class TestRenumf90(object):
 			_renum.run()
 
 	@pytest.mark.parametrize(
-		"kwargs", [{"app": "renumf90", "fn_par": "param_fail.txt"}]
+		"kwargs", [{"app": transform(RENUMF90), "fn_par": "param_fail.txt"}]
 	)
 	def test_renum_fail_run_app(
 			self, kwargs: dict, make_space_preparation: Path
 	) -> None:
+		shutil.copy2(
+			_DIR_FILES / "fail/param_fail.txt", make_space_preparation
+		)
+
 		_renum = Renumf90(**kwargs, work_dir=make_space_preparation)
 		_renum.run()
 

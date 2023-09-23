@@ -37,7 +37,7 @@ def make_space_preparation(tmp_path) -> Path:
 @pytest.fixture
 def obj_reml(request, make_space_preparation: Path) -> Remlf90:
 	return Remlf90(
-		app="remlf90",
+		app=transform(REMLF90),
 		work_dir=make_space_preparation if request.param is None else request.param,
 		fn_par=RENF90_PAR
 	)
@@ -46,7 +46,7 @@ def obj_reml(request, make_space_preparation: Path) -> Remlf90:
 class TestRemlf90(object):
 
 	@pytest.mark.parametrize("obj_reml", [None], indirect=True)
-	def test_aireml_successful(
+	def test_reml_successful(
 			self, obj_reml: Remlf90, make_space_preparation: Path, tmp_path
 	) -> None:
 
@@ -55,15 +55,15 @@ class TestRemlf90(object):
 		assert obj_reml.variance is not None
 
 	@pytest.mark.parametrize("obj_reml", ["random/"], indirect=True)
-	def test_aireml_raise_of_work_dir(self, obj_reml: Remlf90) -> None:
+	def test_reml_raise_of_work_dir(self, obj_reml: Remlf90) -> None:
 
 		with pytest.raises(OSError, match="Directory does not exist."):
 			obj_reml.run()
 
 	@pytest.mark.parametrize(
-		"kwargs", [{"app": "remlf90", "fn_par": "renf90.par1"}]
+		"kwargs", [{"app": transform(REMLF90), "fn_par": "renf90.par1"}]
 	)
-	def test_aireml_raise_config(
+	def test_reml_raise_config(
 			self, kwargs: dict, make_space_preparation: Path
 	) -> None:
 		_aireml = Remlf90(**kwargs, work_dir=make_space_preparation)
@@ -78,28 +78,23 @@ class TestRemlf90(object):
 			_aireml.variance.dict().values()
 		)))
 
-	def test_aireml_raise_app_exists_os(
+	def test_reml_raise_app_exists_os(
 			self, make_space_preparation: Path
 	) -> None:
 		_app = None
-		_reml = None
 
 		match sys.platform:
 			case "linux":
 				_app = "remlf90.exe"
-				_reml = Remlf90(
-					app=_app,
-					work_dir=make_space_preparation,
-					fn_par="renf90.par"
-				)
 
 			case "win32":
 				_app = "remlf90"
-				_reml = Remlf90(
-					app=_app,
-					work_dir=make_space_preparation,
-					fn_par="renf90.par"
-				)
+
+		_reml = Remlf90(
+			app=_app,
+			work_dir=make_space_preparation,
+			fn_par="renf90.par"
+		)
 
 		with pytest.raises(
 				ValueError, match=f"The program being run is not {_app}."
@@ -107,12 +102,14 @@ class TestRemlf90(object):
 			_reml.run()
 
 	@pytest.mark.parametrize(
-		"kwargs", [{"app": "remlf90", "fn_par": "renf90_fail.par"}]
+		"kwargs", [{"app": transform(REMLF90), "fn_par": "renf90_fail.par"}]
 	)
-	def test_aireml_fail_run_app_empty_log(
+	def test_reml_fail_run_app_empty_log(
 			self, kwargs: dict, make_space_preparation: Path
 	) -> None:
-		shutil.copy2(_DIR_FILES / "var/renf90_fail.par", make_space_preparation)
+		shutil.copy2(
+			_DIR_FILES / "fail/renf90_fail.par", make_space_preparation
+		)
 
 		_reml = Remlf90(**kwargs, work_dir=make_space_preparation)
 		_reml.run()
