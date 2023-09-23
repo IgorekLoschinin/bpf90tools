@@ -37,7 +37,7 @@ def make_space_preparation(tmp_path) -> Path:
 @pytest.fixture
 def obj_aireml(request, make_space_preparation: Path) -> AIremlf90:
 	return AIremlf90(
-		app="airemlf90",
+		app=transform(AIREMLF90),
 		work_dir=make_space_preparation if request.param is None else request.param,
 		fn_par=RENF90_PAR
 	)
@@ -61,7 +61,7 @@ class TestAIRemlf90(object):
 			obj_aireml.run()
 
 	@pytest.mark.parametrize(
-		"kwargs", [{"app": "airemlf90", "fn_par": "renf90.par1"}]
+		"kwargs", [{"app": transform(AIREMLF90), "fn_par": "renf90.par1"}]
 	)
 	def test_aireml_raise_config(
 			self, kwargs: dict, make_space_preparation: Path
@@ -82,24 +82,19 @@ class TestAIRemlf90(object):
 			self, make_space_preparation: Path
 	) -> None:
 		_app = None
-		_aireml = None
 
 		match sys.platform:
 			case "linux":
 				_app = "airemlf90.exe"
-				_aireml = AIremlf90(
-					app=_app,
-					work_dir=make_space_preparation,
-					fn_par="renf90.par"
-				)
 
 			case "win32":
 				_app = "airemlf90"
-				_aireml = AIremlf90(
-					app=_app,
-					work_dir=make_space_preparation,
-					fn_par="renf90.par"
-				)
+
+		_aireml = AIremlf90(
+			app=_app,
+			work_dir=make_space_preparation,
+			fn_par="renf90.par"
+		)
 
 		with pytest.raises(
 				ValueError, match=f"The program being run is not {_app}."
@@ -107,12 +102,14 @@ class TestAIRemlf90(object):
 			_aireml.run()
 
 	@pytest.mark.parametrize(
-		"kwargs", [{"app": "airemlf90", "fn_par": "renf90_fail.par"}]
+		"kwargs", [{"app": transform(AIREMLF90), "fn_par": "renf90_fail.par"}]
 	)
 	def test_aireml_fail_run_app_exists_log(
 			self, kwargs: dict, make_space_preparation: Path
 	) -> None:
-		shutil.copy2(_DIR_FILES / "var/renf90_fail.par", make_space_preparation)
+		shutil.copy2(
+			_DIR_FILES / "fail/renf90_fail.par", make_space_preparation
+		)
 
 		_aireml = AIremlf90(**kwargs, work_dir=make_space_preparation)
 

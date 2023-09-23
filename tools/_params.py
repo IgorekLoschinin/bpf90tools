@@ -10,15 +10,20 @@ class Params(object):
 	def __init__(
 			self,
 			file_config: str | Path | None = None,
-			type_model: str = "single"  # or multi
+			type_model: str = "single"  # or mult
 	) -> None:
 		"""
 		:param file_config: - The name or path to the file in which the
 			program launch options will be written
-		:param type_model: - Model type
+		:param type_model: - Model type. Can be 'single' or 'mult'.
+			Default single
 		"""
 
-		self.type_model = type_model
+		self._type_model = type_model
+
+		if isinstance(file_config, str):
+			file_config = Path(file_config)
+
 		self._file_param = file_config
 
 	def create(self, obj_param: dict) -> bool:
@@ -36,22 +41,50 @@ class Params(object):
 		if not obj_param:
 			return False
 
-		list_param = []
-		for key, value in obj_param.items():
-			for item_value in value:
-				list_param.extend([key, item_value])
+		if self._file_param is None:
+			return False
 
-		with open(self._file_param, 'w') as file_param:
-			file_param.writelines('#PARAMETER FILE\n')
+		match self._type_model:
+			case 'single':
+				if not self._single_model(obj_param):
+					return False
 
-			for param in list_param:
-				if param in ['RESIDUAL_VARIANCE', '(CO)VARIANCES']:
-					file_param.writelines(param + '\n\t')
+			case 'mult':
+				return False
 
-				elif param.startswith("OPTION") or param.startswith("COMBINE"):
-					file_param.writelines(param + ' ')
+			case _:
+				return False
 
-				else:
-					file_param.writelines(param + '\n')
+		return True
+
+	def _single_model(self, param_data: dict) -> bool:
+		""" Building a file with settings for a single-feature model
+
+		:param param_data: - Dictionary with settings
+		:return: Returns true if the settings file was created successfully
+			and false if it failed
+		"""
+
+		try:
+			list_param = []
+			for key, value in param_data.items():
+				for item_value in value:
+					list_param.extend([key, item_value])
+
+			with open(self._file_param, 'w') as file_param:
+				file_param.writelines('#PARAMETER FILE\n')
+
+				for param in list_param:
+					if param in ['RESIDUAL_VARIANCE', '(CO)VARIANCES']:
+						file_param.writelines(param + '\n\t')
+
+					elif param.startswith("OPTION") or param.startswith("COMBINE"):
+						file_param.writelines(param + ' ')
+
+					else:
+						file_param.writelines(param + '\n')
+
+		except Exception as e:
+			return False
 
 		return True

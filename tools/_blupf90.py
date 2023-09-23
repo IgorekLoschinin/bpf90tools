@@ -27,15 +27,17 @@ class Blupf90(If90, CheckMixin):
 			*,
 			app: str,
 			work_dir: str | Path,
-			vara: str | None = None
+			vara: str | None = None,
+			fn_par: str | None = None
 	) -> None:
 		"""
 		:param app: - The name of the program
 		:param work_dir: - Directory where all programs and files are located
 		:param vara: - Genetic variant. None by default. Used to translate
 			s.e. to reliability
+		:param fn_par: - The name of the parameter file with settings
 		"""
-		If90.__init__(self, app=app, work_dir=work_dir)
+		If90.__init__(self, app=app, work_dir=work_dir, fn_par=fn_par)
 
 		self.__vara = vara
 		self.__data = None
@@ -61,9 +63,6 @@ class Blupf90(If90, CheckMixin):
 		if not self.is_dir(self._work_dir):
 			raise OSError("Directory does not exist.")
 
-		if self._app != transform(BLUPF90):
-			raise Exception(f"The program being run is not {BLUPF90}.")
-
 		if not self.__blup():
 			return False
 
@@ -73,28 +72,40 @@ class Blupf90(If90, CheckMixin):
 		return True
 
 	def __blup(self) -> bool:
-		"""  """
+		""" Starting the breeding value calculation """
 
-		_par_file = self._work_dir / RENF90_PAR
-		if not self.is_file(_par_file):
-			raise OSError(f"{_par_file} file is not found. Run renumf90.")
+		# Define file param
+		if self._par_file is not None:
+			_config = self._work_dir / self._par_file
+
+		else:
+			_config = self._work_dir / RENF90_PAR
+
+		if not self.is_file(_config):
+			raise OSError(f"{RENF90_PAR} file is not found. Run renumf90.")
+
+		# Run app
+		if self._app != transform(BLUPF90):
+			raise ValueError(f"The program being run is not {self._app}.")
 
 		_app_file = self._work_dir / self._app
-		if not run_app(_app_file, _par_file, dir_cwd=self._work_dir):
+		if not run_app(_app_file, _config, dir_cwd=self._work_dir):
 			return False
 
 		return True
 
 	def __processing_result(self, work_dir: Path) -> bool:
+		""" Processing data
+
+		:param work_dir: - Directory where all programs and files are located
+		:return: Return true if processing data successful else False
+		"""
 
 		f_solutions = work_dir / SOLUTIONS
 		if not self.is_file(f_solutions):
 			raise OSError(f"{SOLUTIONS} file is not found.")
 
 		f_renadd = self.__search_ped(work_dir)
-		if f_renadd is None:
-			raise OSError("File renadd__.ped is not found.")
-
 		data_ped = self.__handler_ped(f_renadd)
 		data_sol = self.__handler_sol(f_solutions)
 
