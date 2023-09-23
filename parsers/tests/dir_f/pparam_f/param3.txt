@@ -1,0 +1,29 @@
+#PARAMETER FILE
+DATAFILE
+phen.txt
+TRAITS
+5
+FIELDS_PASSED TO OUTPUT
+1
+RESIDUAL_VARIANCE
+	1.0
+EFFECT
+1 cross alpha
+EFFECT
+2 cross alpha
+EFFECT1
+3 cov
+EFFECT
+4 cross alpha
+EFFECT
+6 cross alpha
+RANDOM
+animal
+FILE
+ped.txt
+FILE_POS
+1 2 3 0 0
+(CO)VARIANCES
+	0.65
+OPTION1 sol se
+OPTION alpha_size 40

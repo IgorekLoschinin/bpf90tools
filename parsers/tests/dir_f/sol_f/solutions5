@@ -1,0 +1,27 @@
+ name of parameter file?
+renf90.par
+     AIREMLF90 ver. 1.149
+
+ Parameter file:             renf90.par
+ Data file:                  renf90.dat
+ Number of Traits             1
+ Number of Effects            4
+ Position of Observations      1
+ Position of Weights           0
+ Value of Missing Trait/Observation           0
+
+EFFECTS
+ #  type                position (2)        levels   [positions for nested]
+    1  cross-classified       2         2
+    2  cross-classified       3         4
+    3  covariable             4         1
+    4  cross-classified       5        15
+
+ Residual (co)variance Matrix
+ 0.14000    
+
+ Random Effect(s)    4
+ Type of Random Effect:      additive animal with unknown parent groups and inbreeding
+ Pedigree File:              renadd04.ped                                                                                                                                                                                                                                              
+ trait   effect    (CO)VARIANCES
+  1       4    0.5000E-01
