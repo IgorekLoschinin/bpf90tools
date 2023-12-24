@@ -16,7 +16,7 @@ class PParams(IParser, Keywords, CheckMixin):
 		self.__data_param = defaultdict(list)
 
 	@property
-	def params(self) -> dict[list]:
+	def params(self) -> dict[str, list]:
 		""" Method that returns data - a dictionary of keywords and their
 		values """
 		return self.__data_param
