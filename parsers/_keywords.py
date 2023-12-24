@@ -5,6 +5,7 @@
 class Keywords(object):
 	RENUMF90_keyword = {
 		"DATAFILE",
+		"SKIP_HEADER",
 		"TRAITS",
 		"FIELDS_PASSED TO OUTPUT",
 		"WEIGHT(S)",
