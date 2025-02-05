@@ -13,7 +13,8 @@ BASE_TEMPLET_SINGLE_BLUP = {
 	'(CO)VARIANCES': ['0'],
 	'OPTION sol': ['se'],
 	'OPTION alpha_size': ['40'],
-
+	'OPTION fact_once': ['memory'],
+	'OPTION': ['use_yams'],
 }
 
 BASE_TEMPLET_SINGLE_GBLUP = {
@@ -29,4 +30,6 @@ BASE_TEMPLET_SINGLE_GBLUP = {
 	'(CO)VARIANCES': ['0'],
 	'OPTION sol': ['se'],
 	'OPTION alpha_size': ['40'],
+	'OPTION fact_once': ['memory'],
+	'OPTION': ['use_yams'],
 }
