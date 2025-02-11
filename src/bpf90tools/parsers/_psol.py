@@ -19,12 +19,12 @@ from .._utils import CheckMixin
 
 
 class PSolution(IParser, CheckMixin):
-	""" Processing the file with results of the assessment """
+	""" Processing the file with results of the assessment. """
 
 	def __init__(self, varg: float = None) -> None:
 		"""
-		:param varg: - The genetic ability required to calculate the
-			confidence of the estimate
+		:param varg: The genetic ability required to calculate the
+			confidence of the estimate.
 		"""
 		self.__varg = varg
 		self.__data_sol = None
@@ -35,11 +35,11 @@ class PSolution(IParser, CheckMixin):
 
 	def parse_file(self, file: str | Path) -> bool:
 		""" Handler for a file with the results of evaluations of breeding
-		values
+		values.
 
-		:param file: - Path to file solutions
-		:return: - Returns true if file parsing was successful, false if
-			it failed
+		:param file: Path to file solutions.
+		:return: Returns true if file parsing was successful, false if it
+			failed.
 		"""
 
 		if isinstance(file, str):
@@ -85,9 +85,9 @@ class PSolution(IParser, CheckMixin):
 		return True
 
 	def _read(self, pth_file: Path) -> None:
-		""" Reading a file
+		""" Reading a file.
 
-		:param pth_file: - The path to the file
+		:param pth_file: The path to the file.
 		"""
 
 		with pth_file.open(mode="r", encoding="utf-8") as file:
@@ -103,9 +103,9 @@ class PSolution(IParser, CheckMixin):
 		""" Derivation of the reliability of the estimate from its
 		standard deviation.
 
-		:param se_data: - Standard deviation calculated by blupf90
-		:param var_gen: - Genetic variance calculated by remlf90
-		:return: - The return reliability
+		:param se_data: Standard deviation calculated by blupf90.
+		:param var_gen: Genetic variance calculated by remlf90.
+		:return: The return reliability.
 		"""
 		rel = (1 - (se_data ** 2) / var_gen) * 100
 

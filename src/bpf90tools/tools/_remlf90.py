@@ -30,7 +30,7 @@ from ..parsers import (
 
 class Remlf90(If90, CheckMixin):
 	""" Restricted Maximum Likelihood (REML) approach for estimating covariance
-	matrices in linear stochastic models """
+	matrices in linear stochastic models. """
 
 	def __init__(
 			self,
@@ -40,20 +40,20 @@ class Remlf90(If90, CheckMixin):
 			fn_par: str | None = None
 	) -> None:
 		"""
-		:param app: - The name of the program
-		:param work_dir: - Directory where all programs and files are located
-		:param fn_par: - The name of the parameter file with settings
+		:param app: The name of the program.
+		:param work_dir: Directory where all programs and files are located.
+		:param fn_par: The name of the parameter file with settings.
 		"""
 		If90.__init__(self, app=app, work_dir=work_dir, fn_par=fn_par)
 
 		self.__parser = PVar()
 
 	def run(self) -> bool:
-		""" Calculate variance the method reml
+		""" Calculate variance the method reml.
 
-		:return: - Returns true if the program started and ran without errors
-			else false
-		:raise: - Exceptions when files do not exist
+		:return: Returns true if the program started and ran without errors
+			else false.
+		:raise: Exceptions when files do not exist.
 		"""
 
 		if isinstance(self._work_dir, str):

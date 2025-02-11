@@ -19,7 +19,8 @@ from .._utils import CheckMixin
 
 class PParams(IParser, Keywords, CheckMixin):
 	""" This is a class that processes a parameter file which is a
-	configuration file for calculating blupf90. """
+	configuration file for calculating blupf90.
+	"""
 
 	def __init__(self) -> None:
 		self.__data_param = defaultdict(list)
@@ -27,14 +28,15 @@ class PParams(IParser, Keywords, CheckMixin):
 	@property
 	def params(self) -> dict[str, list]:
 		""" Method that returns data - a dictionary of keywords and their
-		values """
+		values.
+		"""
 		return self.__data_param
 
 	def parse_file(self, pth_file: str | Path) -> bool:
-		""" Parsing the param.txt file
+		""" Parsing the param.txt file.
 
-		:param pth_file: - The path to the file param.txt
-		:return: - Throws an exception when an error occurs
+		:param pth_file: The path to the file param.txt.
+		:return: Throws an exception when an error occurs.
 		"""
 
 		if isinstance(pth_file, str):
@@ -70,10 +72,10 @@ class PParams(IParser, Keywords, CheckMixin):
 		return True
 
 	def _read(self, pth_file: str | Path) -> None | list:
-		""" Reading a file
+		""" Reading a file.
 
-		:param pth_file: - The path to the file
-		:return: - Return the list line
+		:param pth_file: The path to the file.
+		:return: Return the list line.
 		"""
 
 		with pth_file.open(mode='r', encoding='utf-8') as file:

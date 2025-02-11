@@ -13,7 +13,7 @@ from pathlib import Path
 
 
 class Params(object):
-	""" Creates a parameter file """
+	""" Creates a parameter file. """
 
 	def __init__(
 			self,
@@ -21,10 +21,9 @@ class Params(object):
 			type_model: str = "single"  # or mult
 	) -> None:
 		"""
-		:param file_config: - The name or path to the file in which the
-			program launch options will be written
-		:param type_model: - Model type. Can be 'single' or 'mult'.
-			Default single
+		:param file_config: The name or path to the file in which the
+			program launch options will be written.
+		:param type_model: Model type. Can be 'single' or 'mult'. Default single.
 		"""
 
 		self._type_model = type_model
@@ -36,7 +35,7 @@ class Params(object):
 
 	def create(self, obj_param: dict) -> bool:
 		""" Method that forms the structure of the config and saves it
-		to a file
+		to a file.
 
 		:param obj_param: An object of the dictionary type that stores the
 			structure of the required parameters and from the value for the
@@ -66,11 +65,11 @@ class Params(object):
 		return True
 
 	def _single_model(self, param_data: dict) -> bool:
-		""" Building a file with settings for a single-feature model
+		""" Building a file with settings for a single-feature model.
 
-		:param param_data: - Dictionary with settings
+		:param param_data: Dictionary with settings.
 		:return: Returns true if the settings file was created successfully
-			and false if it failed
+			and false if it failed.
 		"""
 
 		try:

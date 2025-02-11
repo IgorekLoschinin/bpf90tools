@@ -35,19 +35,19 @@ class Renumf90(If90, CheckMixin):
 			fn_par: str | None = None
 	) -> None:
 		"""
-		:param app: - The name of the program
-		:param work_dir: - Directory where all programs and files are located
-		:param fn_par: - The name of the parameter file with settings
+		:param app: The name of the program.
+		:param work_dir: Directory where all programs and files are located.
+		:param fn_par: The name of the parameter file with settings.
 		"""
 		If90.__init__(self, app=app, work_dir=work_dir, fn_par=fn_par)
 
 	def run(self) -> bool:
 		""" RENUM is a renumbering program to create input (data, pedigree,
-		and parameter) files for BLUPF90 programs and provide basic statistics
+		and parameter) files for BLUPF90 programs and provide basic statistics.
 
-		:return: - Returns true if the program started and ran without errors
-			else false
-		:raise: - Exceptions when files do not exist
+		:return: Returns true if the program started and ran without errors
+			else false.
+		:raise: Exceptions when files do not exist.
 		"""
 
 		if isinstance(self._work_dir, str):

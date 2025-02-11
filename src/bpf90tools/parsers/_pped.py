@@ -20,7 +20,8 @@ from .._utils import CheckMixin
 class PPed(IParser, CheckMixin):
 	""" Pedigree file processing - renadd__.ped which is obtained as a result
 	of processing by renumf90 program.
-	Example file: renadd02.ped	"""
+	Example file: renadd02.ped
+	"""
 
 	def __init__(self) -> None:
 		self.__data_ped = None
@@ -28,14 +29,14 @@ class PPed(IParser, CheckMixin):
 
 	@property
 	def values(self) -> pd.DataFrame | None:
-		""" Return of dataframe - ['nomer', 'ID'] """
+		""" Return of dataframe - ['nomer', 'ID']. """
 		return self.__data_ped
 
 	def parse_file(self, pth_file: str | Path) -> bool:
 		""" The parsing data files pedigree.
 
-		:param pth_file: The path to file renadd.ped - pedigree
-		:return: - Throws an exception when an error occurs
+		:param pth_file: The path to file renadd.ped - pedigree.
+		:return: Throws an exception when an error occurs.
 		"""
 
 		if isinstance(pth_file, str):
@@ -63,9 +64,9 @@ class PPed(IParser, CheckMixin):
 		return True
 
 	def _read(self, file: Path) -> None:
-		""" Reading a file
+		""" Reading a file.
 
-		:param file: - The path to the file
+		:param file: The path to the file.
 		"""
 		with file.open(mode="r", encoding="utf-8") as obj_file:
 			self.__lst_ped = [

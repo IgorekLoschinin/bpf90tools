@@ -33,7 +33,8 @@ from ..parsers import (
 
 class Blupf90(If90, CheckMixin):
 	""" BLUP (Best Linear Unbiased Prediction - the best linear unbiased
-	prediction) method for determining the genetic potential of animals """
+	prediction) method for determining the genetic potential of animals.
+	"""
 
 	def __init__(
 			self,
@@ -44,11 +45,11 @@ class Blupf90(If90, CheckMixin):
 			fn_par: str | None = None
 	) -> None:
 		"""
-		:param app: - The name of the program
-		:param work_dir: - Directory where all programs and files are located
-		:param vara: - Genetic variant. None by default. Used to translate
-			s.e. to reliability
-		:param fn_par: - The name of the parameter file with settings
+		:param app: The name of the program.
+		:param work_dir: Directory where all programs and files are located.
+		:param vara: Genetic variant. None by default. Used to translate
+			s.e. to reliability.
+		:param fn_par: The name of the parameter file with settings.
 		"""
 		If90.__init__(self, app=app, work_dir=work_dir, fn_par=fn_par)
 
@@ -60,11 +61,11 @@ class Blupf90(If90, CheckMixin):
 		return self.__data
 
 	def run(self) -> bool:
-		""" Starts breeding value calculation
+		""" Starts breeding value calculation.
 
-		:return: - Returns true if the program started and ran without errors
-			else false
-		:raise: - Exceptions when files do not exist
+		:return: Returns true if the program started and ran without errors
+			else false.
+		:raise: Exceptions when files do not exist.
 		"""
 
 		if isinstance(self._work_dir, str):
@@ -85,7 +86,7 @@ class Blupf90(If90, CheckMixin):
 		return True
 
 	def __blup(self) -> bool:
-		""" Starting the breeding value calculation """
+		""" Starting the breeding value calculation. """
 
 		# Define file param
 		if self._par_file is not None:
@@ -108,10 +109,10 @@ class Blupf90(If90, CheckMixin):
 		return True
 
 	def __processing_result(self, work_dir: Path) -> bool:
-		""" Processing data
+		""" Processing data.
 
-		:param work_dir: - Directory where all programs and files are located
-		:return: Return true if processing data successful else False
+		:param work_dir: Directory where all programs and files are located.
+		:return: Return true if processing data successful else False.
 		"""
 
 		f_solutions = work_dir / SOLUTIONS
@@ -131,10 +132,10 @@ class Blupf90(If90, CheckMixin):
 		return True
 
 	def __handler_sol(self, pth_file: Path) -> pd.DataFrame:
-		""" Results file handler with breeding value and estimation accuracy
+		""" Results file handler with breeding value and estimation accuracy.
 
-		:param pth_file: - Path to file solutions
-		:return: - Return dataframe with data - ebv, se or rel
+		:param pth_file: Path to file solutions.
+		:return: Return dataframe with data - ebv, se or rel.
 		"""
 
 		sol = PSolution(varg=self.__vara)
@@ -144,10 +145,10 @@ class Blupf90(If90, CheckMixin):
 
 	@staticmethod
 	def __handler_ped(pth_file: Path) -> pd.DataFrame:
-		""" Ped file handler
+		""" Ped file handler.
 
-		:param pth_file: - Path to file ped
-		:return: - Return dataframe with data - [nomer, id]
+		:param pth_file: Path to file ped.
+		:return: Return dataframe with data - [nomer, id].
 		"""
 
 		ped = PPed()
@@ -157,10 +158,10 @@ class Blupf90(If90, CheckMixin):
 
 	@staticmethod
 	def __search_ped(w_d: Path) -> Path | None:
-		""" Search for a pedigree file
+		""" Search for a pedigree file.
 
-		:param w_d: - Search directory
-		:return: - Returns either the file if found, or non if not found
+		:param w_d: Search directory.
+		:return: Returns either the file if found, or non if not found.
 		"""
 
 		lst_files = []

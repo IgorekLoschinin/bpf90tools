@@ -29,8 +29,9 @@ class Variance(BaseModel):
 
 
 class PVar(IParser, CheckMixin):
-	""" Processing the file method (ai)remlf90 in which the variance information
-	is stored """
+	""" Processing the file method (ai)remlf90 in which the variance
+	information is stored.
+	"""
 
 	def __init__(self) -> None:
 		self.__variance = Variance()
@@ -41,9 +42,9 @@ class PVar(IParser, CheckMixin):
 		return self.__variance
 
 	def parse_file(self, pth_file: str | Path) -> bool:
-		""" Parsing the log file of the (ai)remlf90.exe(sh) program
+		""" Parsing the log file of the (ai)remlf90.exe(sh) program.
 
-		:param pth_file: - The path to the file log
+		:param pth_file: The path to the file log.
 		"""
 
 		if isinstance(pth_file, str):
@@ -87,9 +88,9 @@ class PVar(IParser, CheckMixin):
 		return True
 
 	def _read(self, file: Path) -> None:
-		""" Reading a file
+		""" Reading a file.
 
-		:param file: - The path to the file
+		:param file: The path to the file.
 		"""
 		with file.open(mode='r', encoding="utf-8") as file_log:
 			self.__lst_strings = list(map(
@@ -97,10 +98,10 @@ class PVar(IParser, CheckMixin):
 			))
 
 	def _next_value(self, elem: str) -> int:
-		""" Determines the index of the next element in the list
+		""" Determines the index of the next element in the list.
 
-		:param elem: - List item
-		:return: - Return the index of the next element
+		:param elem: List item.
+		:return: Return the index of the next element.
 		"""
 
 		return self.__lst_strings.index(elem) + 1
@@ -108,7 +109,8 @@ class PVar(IParser, CheckMixin):
 	def _heritability(self) -> None:
 		""" Heritability, the degree of conditionality of the phenotypic
 		variability of any trait in an animal population by genotypic
-		differences between individuals """
+		differences between individuals.
+		"""
 
 		try:
 			if (self.__variance.varE and self.__variance.varG) is not None:

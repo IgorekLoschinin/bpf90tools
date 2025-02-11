@@ -30,13 +30,13 @@ from ..parsers import (
 
 class AIremlf90(If90, CheckMixin):
 	""" A modification of REMLF90 with computing by the Average-Information
-	Algorithm
+	Algorithm.
 
-	For most problems, it converges in far
-	fewer rounds than EM REML as implemented in REMLF90. While typically REMLF90
-	takes 50-300 rounds to converge, AIREMLF90 converges in 5-15 rounds and to a
-	higher accuracy. For selected problems, AI REML fails to converge when the
-	covariance matrix is close to non-positive definite.
+	For most problems, it converges in far fewer rounds than EM REML as
+	implemented in REMLF90. While typically REMLF90 takes 50-300 rounds to
+	converge, AIREMLF90 converges in 5-15 rounds and to a higher accuracy. For
+	selected problems, AI REML fails to converge when the covariance matrix is
+	close to non-positive definite.
 	"""
 
 	def __init__(
@@ -56,11 +56,11 @@ class AIremlf90(If90, CheckMixin):
 		self.__parser = PVar()
 
 	def run(self) -> bool:
-		""" Calculate variance the method aireml
+		""" Calculate variance the method aireml.
 
-		:return: - Returns true if the program started and ran without errors
-			else false
-		:raise: - Exceptions when files do not exist
+		:return: Returns true if the program started and ran without errors
+			else false.
+		:raise: Exceptions when files do not exist.
 		"""
 
 		if isinstance(self._work_dir, str):
