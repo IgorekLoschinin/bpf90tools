@@ -25,7 +25,6 @@ f90tools/
 ```
 
 ## Installation
-You can install snptools via pip from [PyPI](https://pypi.org/project/snplib/):
 1. Create a virtual environment:
 ```
 python -m venv f90tools_env
@@ -40,8 +39,9 @@ cd f90tools
 
 3. Building the project:
 ```
-python -m pip install --upgrade pip
-python -m build
+python3 -m pip install --upgrade pip
+pip install build
+python3 -m build
 ```
 
 4. Install the package in the project environment:
@@ -49,10 +49,23 @@ python -m build
 pip install .
 ```
 
+5. Deleting a repository from a project:
+```
+rm ./f90tools
+```
+
 ## Usage
 f90tools provides commands for a variety of operations. Here are examples of 
 usage:
 ```
+from f90tools import Renumf90
+
+renum = Renumf90(
+    app="renumf90",                 # for Win renumf90.exe
+    work_dir="./foldtest",
+    fn_par="param_file.txt"
+)
+renum.run()
 ```
 
 ## Documentation
