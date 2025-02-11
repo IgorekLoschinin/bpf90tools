@@ -7,3 +7,10 @@
 # of this license document, but changing it is not allowed.
 
 __author__ = "Igor Loschinin (igor.loschinin@gmail.com)"
+__all__ = (
+	"_DIR_FILES",
+)
+
+from pathlib import Path
+
+_DIR_FILES = Path(__file__).parent.joinpath("dir_f")

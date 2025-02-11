@@ -7,3 +7,20 @@
 # of this license document, but changing it is not allowed.
 
 __author__ = "Igor Loschinin (igor.loschinin@gmail.com)"
+__all__ = ("IParser", )
+
+from abc import (
+	ABC,
+	abstractmethod
+)
+
+
+class IParser(ABC):
+
+	@abstractmethod
+	def parse_file(self, file: str) -> None:
+		raise NotImplementedError
+
+	@abstractmethod
+	def _read(self, file) -> None:
+		raise NotImplementedError
