@@ -16,7 +16,7 @@ from .settings import (
 	PARAM_FILE,
 	RENUMF90
 )
-from .._utils import (
+from ..utils import (
 	run_app,
 	CheckMixin,
 	transform

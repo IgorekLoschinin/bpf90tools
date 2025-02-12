@@ -20,7 +20,7 @@ from .settings import (
 	SOLUTIONS,
 	RENADD
 )
-from .._utils import (
+from ..utils import (
 	run_app,
 	CheckMixin,
 	transform

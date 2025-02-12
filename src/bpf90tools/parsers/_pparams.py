@@ -12,9 +12,11 @@ __all__ = ("PParams", )
 from collections import defaultdict
 from pathlib import Path
 
-from . import IParser
-from ._keywords import Keywords
-from .._utils import CheckMixin
+from . import (
+	IParser,
+	Keywords
+)
+from ..utils import CheckMixin
 
 
 class PParams(IParser, Keywords, CheckMixin):

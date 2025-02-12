@@ -17,7 +17,7 @@ from pathlib import Path
 from pydantic import BaseModel
 
 from . import IParser
-from .._utils import CheckMixin
+from ..utils import CheckMixin
 
 
 class Variance(BaseModel):
