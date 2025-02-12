@@ -15,7 +15,7 @@ from pathlib import Path
 import pytest
 
 from bpf90tools.src.bpf90tools import Remlf90
-from bpf90tools.src.bpf90tools._utils import transform
+from bpf90tools.src.bpf90tools.utils import transform
 from bpf90tools.src.bpf90tools.tools.settings import (
 	REMLF90,
 	RENF90_PAR

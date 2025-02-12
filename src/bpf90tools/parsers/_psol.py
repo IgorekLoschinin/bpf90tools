@@ -15,7 +15,7 @@ import numpy as np
 import pandas as pd
 
 from . import IParser
-from .._utils import CheckMixin
+from ..utils import CheckMixin
 
 
 class PSolution(IParser, CheckMixin):

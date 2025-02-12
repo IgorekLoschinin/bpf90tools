@@ -17,7 +17,7 @@ from .settings import (
 	RENF90_PAR,
 	REMLF90_LOG
 )
-from .._utils import (
+from ..utils import (
 	run_app,
 	CheckMixin,
 	transform

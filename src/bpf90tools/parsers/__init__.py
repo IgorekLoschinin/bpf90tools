@@ -13,9 +13,12 @@ __all__ = (
 	"PVar",
 	"PParams",
 	"Variance",
+	"IParser",
+	"Keywords",
 )
 
 from ._iparser import IParser
+from ._keywords import Keywords
 from ._pparams import PParams
 from ._pped import PPed
 from ._psol import PSolution

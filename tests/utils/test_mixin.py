@@ -9,7 +9,7 @@
 __author__ = "Igor Loschinin (igor.loschinin@gmail.com)"
 
 from pytest import fixture
-from bpf90tools.src.bpf90tools._utils import CheckMixin
+from bpf90tools.src.bpf90tools.utils import CheckMixin
 
 
 @fixture
