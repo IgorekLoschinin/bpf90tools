@@ -18,7 +18,7 @@ from ..utils import CheckMixin
 
 
 class PPed(IParser, CheckMixin):
-	""" Pedigree file processing - renadd__.ped which is obtained as a result
+	""" Pedigree file processing renadd.ped which is obtained as a result
 	of processing by renumf90 program.
 	Example file: renadd02.ped
 	"""
