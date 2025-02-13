@@ -16,11 +16,19 @@ from abc import (
 
 
 class IParser(ABC):
+    """ Abstract class for file parsers.
 
-	@abstractmethod
-	def parse_file(self, file: str) -> None:
-		raise NotImplementedError
+    Defines an interface for classes that must implement methods
+    for processing and reading files.
+    """
 
-	@abstractmethod
-	def _read(self, file) -> None:
-		raise NotImplementedError
+    @abstractmethod
+    def parse_file(self, file: str) -> None:
+        """ Processes the specified file. """
+        raise NotImplementedError
+
+    @abstractmethod
+    def _read(self, file) -> None:
+        """ Reads the contents of the specified file. """
+        raise NotImplementedError
+
