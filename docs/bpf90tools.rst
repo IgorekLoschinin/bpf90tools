@@ -2,7 +2,7 @@ Package
 =======
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
 
    bpf90tools.tools
    bpf90tools.parsers
