@@ -4,7 +4,7 @@ Installation
 To install bpf90tools, follow the steps below.
 
 Install from PyPi
--------------------
+-----------------
 
 Install from github
 -------------------
