@@ -69,7 +69,7 @@ renum.run()
 ```
 
 ## Documentation
-Detailed documentation on how to use f90tools is available see the [docs]().
+Detailed documentation on how to use f90tools is available see the [docs](https://bpf90tools.readthedocs.io/en/latest/).
 
 ## License
 This project is licensed under the GNU General Public License - see the 
