@@ -11,7 +11,7 @@ __author__ = "Igor Loschinin (igor.loschinin@gmail.com)"
 import pytest
 from deepdiff import DeepDiff
 
-from bpf90tools.src.bpf90tools.parsers import PParams
+from bpf90tools import PParams
 from . import _DIR_FILES
 
 

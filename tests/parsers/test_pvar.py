@@ -13,7 +13,7 @@ from pytest import (
 	raises
 )
 
-from bpf90tools.src.bpf90tools.parsers import PVar
+from bpf90tools import PVar
 from . import _DIR_FILES
 
 

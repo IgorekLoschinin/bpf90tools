@@ -14,12 +14,12 @@ from pathlib import Path
 
 import pytest
 
-from bpf90tools.src.bpf90tools import Renumf90
-from bpf90tools.src.bpf90tools.utils import transform
-from bpf90tools.src.bpf90tools.tools.settings import (
+from bpf90tools import (
+	Renumf90,
 	RENUMF90,
 	PARAM_FILE
 )
+from bpf90tools.src.bpf90tools.utils import transform
 from . import (
 	_DIR_UTILS,
 	_DIR_FILES

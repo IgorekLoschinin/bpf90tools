@@ -10,7 +10,7 @@ __author__ = "Igor Loschinin (igor.loschinin@gmail.com)"
 
 import pytest
 
-from bpf90tools.src.bpf90tools.parsers import PPed
+from bpf90tools import PPed
 from . import _DIR_FILES
 
 

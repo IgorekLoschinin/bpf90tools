@@ -10,7 +10,7 @@ __author__ = "Igor Loschinin (igor.loschinin@gmail.com)"
 
 import pytest
 
-from bpf90tools.src.bpf90tools import Params
+from bpf90tools import Params
 
 
 @pytest.fixture
