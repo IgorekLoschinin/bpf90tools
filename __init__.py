@@ -7,3 +7,6 @@
 # of this license document, but changing it is not allowed.
 
 __author__ = "Igor Loschinin (igor.loschinin@gmail.com)"
+
+from .src.bpf90tools import *
+from .src.bpf90tools.parsers import *
