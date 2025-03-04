@@ -41,7 +41,7 @@ class Blupf90(If90, CheckMixin):
 			*,
 			app: str,
 			work_dir: str | Path,
-			vara: str | None = None,
+			vara: float | None = None,
 			fn_par: str | None = None
 	) -> None:
 		"""
